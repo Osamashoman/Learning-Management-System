@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'camp200.wsgi.application'
 #     }
 # }
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
