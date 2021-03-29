@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en"
       dir="ltr">
 
@@ -19,50 +20,51 @@
 
         <!-- Preloader -->
         <link type="text/css"
-              href="../../public/vendor/spinkit.css"
+              href="/static/luma/public/vendor/spinkit.css"
               rel="stylesheet">
 
         <!-- Perfect Scrollbar -->
         <link type="text/css"
-              href="../../public/vendor/perfect-scrollbar.css"
+              href="/static/luma/public/vendor/perfect-scrollbar.css"
               rel="stylesheet">
 
         <!-- Material Design Icons -->
         <link type="text/css"
-              href="../../public/css/material-icons.css"
+              href="/static/luma/public/css/material-icons.css"
               rel="stylesheet">
 
         <!-- Font Awesome Icons -->
         <link type="text/css"
-              href="../../public/css/fontawesome.css"
+              href="/static/luma/public/css/fontawesome.css"
               rel="stylesheet">
 
         <!-- Preloader -->
         <link type="text/css"
-              href="../../public/css/preloader.css"
+              href="/static/luma/public/css/preloader.css"
               rel="stylesheet">
 
         <!-- App CSS -->
         <link type="text/css"
-              href="../../public/css/app.css"
+              href="/static/luma/public/css/app.css"
               rel="stylesheet">
 
         <!-- Quill Theme -->
         <link type="text/css"
-              href="../../public/css/quill.css"
+              href="/static/luma/public/css/quill.css"
               rel="stylesheet">
         <!-- Select2 -->
         <link type="text/css"
-              href="../../public/vendor/select2/select2.min.css"
+              href="/static/luma/public/vendor/select2/select2.min.css"
               rel="stylesheet">
         <link type="text/css"
-              href="../../public/css/select2.css"
+              href="/static/luma/public/css/select2.css"
               rel="stylesheet">
 
     </head>
 
     <body class="layout-sticky-subnav layout-default ">
-
+<form action="{% url 'courses' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
         <div class="preloader">
             <div class="sk-chase">
                 <div class="sk-chase-dot"></div>
@@ -115,7 +117,7 @@
 
                             <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-                                <span class="avatar-title rounded bg-primary"><img src="../../public/images/illustration/student/128/white.svg"
+                                <span class="avatar-title rounded bg-primary"><img src="/static/luma/public/images/illustration/student/128/white.svg"
                                          alt="logo"
                                          class="img-fluid" /></span>
 
@@ -200,7 +202,7 @@
                                                 </span>
                                                 <span class="d-flex">
                                                     <span class="avatar avatar-xs mr-2">
-                                                        <img src="../../public/images/people/110/woman-5.jpg"
+                                                        <img src="/static/luma/public/images/people/110/woman-5.jpg"
                                                              alt="people"
                                                              class="avatar-img rounded-circle">
                                                     </span>
@@ -219,7 +221,7 @@
                                                 </span>
                                                 <span class="d-flex">
                                                     <span class="avatar avatar-xs mr-2">
-                                                        <img src="../../public/images/people/110/woman-5.jpg"
+                                                        <img src="/static/luma/public/images/people/110/woman-5.jpg"
                                                              alt="people"
                                                              class="avatar-img rounded-circle">
                                                     </span>
@@ -366,14 +368,17 @@
                         <div class="flex d-flex flex-column flex-sm-row align-items-center">
 
                             <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                                <h2 class="mb-0">Edit Course</h2>
-
+                                {% if course %}
+                                <h2 class="mb-0">Uptate Course</h2>
+                                {% else %}
+                                <h2 class="mb-0">Create Course</h2>
+                                {% endif %}
                                 <ol class="breadcrumb p-0 m-0">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
 
                                     <li class="breadcrumb-item active">
 
-                                        Edit Course
+                                        create Course
 
                                     </li>
 
@@ -390,158 +395,94 @@
 
                         <div class="row">
                             <div class="col-md-8">
-
                                 <div class="page-separator">
                                     <div class="page-separator__text">Basic information</div>
                                 </div>
 
                                 <label class="form-label">Course title</label>
                                 <div class="form-group mb-24pt">
+                                    {% if course %}
                                     <input type="text"
                                            class="form-control form-control-lg"
                                            placeholder="Course title"
-                                           value="Angular Fundamentals">
-                                    <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small>
+                                           name="Course_title"
+                                    value="{{ course.title}}">
+                                    {% else  %}
+                                      <input type="text"
+                                           class="form-control form-control-lg"
+                                           placeholder="Course title"
+                                           name="Course_title"
+                                    >
+                                    {% endif %}
+
+
+<!--                                    <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small>-->
                                 </div>
 
                                 <div class="form-group mb-32pt">
                                     <label class="form-label">Description</label>
                                     <!-- <textarea class="form-control" rows="3" placeholder="Course description"></textarea> -->
-                                    <div style="height: 150px;"
-                                         class="mb-0"
-                                         data-toggle="quill"
-                                         data-quill-placeholder="Course description">
-                                        <h1>Hello World!</h1>
-                                        <p>Some initial <strong>bold</strong> text</p>
-                                        <p><br></p>
-                                    </div>
-                                    <small class="form-text text-muted">Shortly describe this course.</small>
+                                    <div class="form-group mb-24pt">
+                                        {% if course %}
+                                          <input type="text"
+                                           STYLE="height:100px ;"
+                                           class="form-control form-control-lg"
+                                           placeholder="Description"
+                                           name="Description"
+                                           value="{{ course.description }}">
+                                        {% else %}
+                                          <input type="text"
+                                            STYLE="height:100px ;"
+                                            class="form-control form-control-lg"
+                                            placeholder="Description"
+                                            name="Description">
+                                        {% endif %}
+<!--                                    <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small>-->
                                 </div>
+                                      <div class="form-group mb-32pt">
+                                     <div class="form-group">
+                                            <label class="form-label">Price</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group form-inline">
+                                                        <span class="input-group-prepend"><span class="input-group-text">$</span></span>
+                                                        {% if course %}
+                                                        <input type="number"
+                                                               class="form-control"
+                                                               name="price"
+                                                               value="{{course.price}}"
+                                                                step="0.1">
+                                                        {% else %}
+                                                        <input type="number"
+                                                               class="form-control"
+                                                               name="price"
+                                                               step="0.1">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                <div class="page-separator">
-                                    <div class="page-separator__text">Sections</div>
-                                </div>
+                                        </div>
 
-                                <div class="accordion js-accordion accordion--boxed mb-24pt"
-                                     id="parent">
-                                    <div class="accordion__item">
-                                        <a href="#"
-                                           class="accordion__toggle collapsed"
-                                           data-toggle="collapse"
-                                           data-target="#course-toc-1"
-                                           data-parent="#parent">
-                                            <span class="flex">Course Overview</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
-                                        </a>
-                                        <div class="accordion__menu collapse"
-                                             id="course-toc-1">
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Watch Trailer</a>
-                                                <span class="text-muted">1m 10s</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion__item open">
-                                        <a href="#"
-                                           class="accordion__toggle"
-                                           data-toggle="collapse"
-                                           data-target="#course-toc-2"
-                                           data-parent="#parent">
-                                            <span class="flex">Getting Started with Angular</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
-                                        </a>
-                                        <div class="accordion__menu collapse show"
-                                             id="course-toc-2">
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Introduction</a>
-                                                <span class="text-muted">8m 42s</span>
-                                            </div>
-                                            <div class="accordion__menu-link active">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Introduction to TypeScript</a>
-                                                <span class="text-muted">50m 13s</span>
-                                            </div>
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Comparing Angular to AngularJS</a>
-                                                <span class="text-muted">12m 10s</span>
-                                            </div>
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-take-quiz.html">Quiz: Getting Started With Angular</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion__item">
-                                        <a href="#"
-                                           class="accordion__toggle collapsed"
-                                           data-toggle="collapse"
-                                           data-target="#course-toc-3"
-                                           data-parent="#parent">
-                                            <span class="flex">Creating and Communicating Between Angular Components</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
-                                        </a>
-                                        <div class="accordion__menu collapse"
-                                             id="course-toc-3">
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Angular Components</a>
-                                                <span class="text-muted">04:23</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion__item">
-                                        <a href="#"
-                                           class="accordion__toggle collapsed"
-                                           data-toggle="collapse"
-                                           data-target="#course-toc-4"
-                                           data-parent="#parent">
-                                            <span class="flex">Exploring the Angular Template Syntax</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
-                                        </a>
-                                        <div class="accordion__menu collapse"
-                                             id="course-toc-4">
-                                            <div class="accordion__menu-link">
-                                                <i class="material-icons text-70 icon-16pt icon--left">drag_handle</i>
-                                                <a class="flex"
-                                                   href="student-lesson.html">Template Syntax</a>
-                                                <span class="text-muted">04:23</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <a href="#"
-                                   class="btn btn-outline-secondary mb-24pt mb-sm-0">Add Section</a>
 
-                            </div>
-                            <div class="col-md-4">
+<!--                                <div class="card">-->
+<!--                                    <div class=" card-header text-center" style="border-radius: .5rem .5rem .5rem .5rem;">-->
+<!--                                        <input class="btn btn-accent" type="submit" value="Save">-->
 
-                                <div class="card">
-                                    <div class="card-header text-center">
-                                        <a href="#"
-                                           class="btn btn-accent">Save changes</a>
-                                    </div>
-                                    <div class="list-group list-group-flush">
-                                        <div class="list-group-item d-flex">
-                                            <a class="flex"
-                                               href="#"><strong>Save Draft</strong></a>
-                                            <i class="material-icons text-muted">check</i>
-                                        </div>
-                                        <div class="list-group-item">
-                                            <a href="#"
-                                               class="text-danger"><strong>Delete Course</strong></a>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                    </div>-->
+<!--                                    <div class="list-group list-group-flush">-->
+<!--                                        <div class="list-group-item d-flex">-->
+<!--                                            <a class="flex"-->
+<!--                                               href="#"><strong>Save Draft</strong></a>-->
+<!--                                            <i class="material-icons text-muted">check</i>-->
+<!--                                        </div>-->
+<!--                                        <div class="list-group-item">-->
+<!--                                            <a href="#"-->
+<!--                                               class="text-danger"><strong>Delete Course</strong></a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <div class="page-separator">
                                     <div class="page-separator__text">Video</div>
@@ -550,68 +491,343 @@
                                 <div class="card">
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item"
+
                                                 src="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"
                                                 allowfullscreen=""></iframe>
                                     </div>
+
                                     <div class="card-body">
                                         <label class="form-label">URL</label>
+                                        {% if course %}
                                         <input type="text"
                                                class="form-control"
-                                               value="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"
-                                               placeholder="Enter Video URL">
+                                               name="Video_link"
+                                               placeholder="Enter Video URL"
+                                        value="{{course.promo_video}}">
+                                        {% else %}
+                                        <input type="text"
+                                               class="form-control"
+                                               name="Video_link"
+                                               placeholder="Enter Video URL"
+                                        >
+                                        {% endif %}
                                         <small class="form-text text-muted">Enter a valid video URL.</small>
                                     </div>
                                 </div>
-
                                 <div class="page-separator">
-                                    <div class="page-separator__text">Options</div>
+                                    <div class="page-separator__text">image</div>
                                 </div>
 
                                 <div class="card">
+                                    <div class="embed-responsive embed-responsive-16by9">
+<!--                                        <iframe class="embed-responsive-item"-->
+<!--                                                id="blah" src=""-->
+<!--                                                allowfullscreen=""></iframe>-->
+                                        <img class="embed-responsive-item" id="blah" src="https://via.placeholder.com/150"
+                                        >
+                                    </div>
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <label class="form-label">Category</label>
-                                            <select name="category"
-                                                    class="form-control custom-select">
-                                                <option value="vuejs">VueJs</option>
-                                                <option value="vuejs">Angular</option>
-                                                <option value="vuejs">React</option>
-                                            </select>
-                                            <small class="form-text text-muted">Select a category.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Price</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="input-group form-inline">
-                                                        <span class="input-group-prepend"><span class="input-group-text">$</span></span>
-                                                        <input type="text"
-                                                               class="form-control"
-                                                               value="24">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <small class="form-text text-muted">The recommended price is between &dollar;17 and &dollar;24</small>
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <label class="form-label"
-                                                   for="select03">Tags</label>
-                                            <select id="select03"
-                                                    data-toggle="select"
-                                                    multiple
-                                                    class="form-control">
-                                                <option selected="">JavaScript</option>
-                                                <option selected="">Angular</option>
-                                                <option>Bootstrap</option>
-                                                <option>CSS</option>
-                                                <option>HTML</option>
-                                            </select>
-                                            <small class="form-text text-muted">Select one or more tags.</small>
-                                        </div>
+                                        <label class="form-label">img</label>
+                                        <br>
+                                        {% if course %}
+                                        <input type="file"
+                                               class=""
+                                               name="image_file"
+                                               onchange="readURL(this);"
+                                               value="{{course.image_key}}"
+                                              >
+                                        {% else %}
+                                          <input type="file"
+                                               class=""
+                                               name="image_file"
+                                               onchange="readURL(this);"
+                                              >
+                                        {% endif%}
+
                                     </div>
                                 </div>
 
-                            </div>
+<!--                                <div class="page-separator">-->
+<!--                                    <div class="page-separator__text">Options</div>-->
+<!--                                </div>-->
+
+<!--                                <div class="card">-->
+<!--                                    <div class="card-body">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="form-label">Category</label>-->
+<!--                                            <select name="category"-->
+<!--                                                    class="form-control custom-select">-->
+<!--                                                <option value="vuejs">VueJs</option>-->
+<!--                                                <option value="vuejs">Angular</option>-->
+<!--                                                <option value="vuejs">React</option>-->
+<!--                                            </select>-->
+<!--                                            <small class="form-text text-muted">Select a category.</small>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="form-label">Price</label>-->
+<!--                                            <div class="row">-->
+<!--                                                <div class="col-md-6">-->
+<!--                                                    <div class="input-group form-inline">-->
+<!--                                                        <span class="input-group-prepend"><span class="input-group-text">$</span></span>-->
+<!--                                                        <input type="text"-->
+<!--                                                               class="form-control"-->
+<!--                                                               name="price">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+
+<!--                                        </div>-->
+<!--                                        <div class="form-group mb-0">-->
+<!--                                            <label class="form-label"-->
+<!--                                                   for="select03">Tags</label>-->
+<!--                                            <select id="select03"-->
+<!--                                                    data-toggle="select"-->
+<!--                                                    multiple-->
+<!--                                                    class="form-control">-->
+<!--                                                <option selected="">JavaScript</option>-->
+<!--                                                <option selected="">Angular</option>-->
+<!--                                                <option>Bootstrap</option>-->
+<!--                                                <option>CSS</option>-->
+<!--                                                <option>HTML</option>-->
+<!--                                            </select>-->
+<!--                                            <small class="form-text text-muted">Select one or more tags.</small>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+
+
+                                </div>
+<!--                                    <small class="form-text text-muted">Shortly describe this course.</small>-->
+                                </div>
+
+<!--                                <div class="page-separator">-->
+<!--                                    <div class="page-separator__text">courses</div>-->
+<!--                                </div>-->
+
+<!--                                <div class="accordion js-accordion accordion&#45;&#45;boxed mb-24pt"-->
+<!--                                     id="parent">-->
+<!--                                    <div class="accordion__item">-->
+<!--                                        <br>-->
+<!--                                        <a href="#"-->
+<!--                                           class="accordion__toggle collapsed"-->
+<!--                                           data-toggle="collapse"-->
+<!--                                           data-target="#course-toc-1"-->
+<!--                                           data-parent="#parent">-->
+<!--                                            <span class="flex">Courses</span>-->
+<!--                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>-->
+<!--                                        </a>-->
+<!--                                        <div class="accordion__menu collapse"-->
+<!--                                             id="course-toc-1">-->
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">  </a>-->
+<!--                                                <span class="text-muted" style="padding:5px;"> <input class="btn btn-accent" type="submit" value="Edit"></span>-->
+<!--                                                <span class="text-muted"> <input class="btn btn-accent" type="submit" value="Delete"></span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class=" open">
+<!--                                        <a href="#"-->
+<!--                                           class="accordion__toggle"-->
+<!--                                           data-toggle="collapse"-->
+<!--                                           data-target="#course-toc-2"-->
+<!--                                           data-parent="#parent">-->
+<!--                                            <span class="flex">Getting Started with Angular</span>-->
+<!--                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>-->
+<!--                                        </a>-->
+                                        <div class="accordion__menu collapse show"
+                                             id="course-toc-2">
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">Introduction</a>-->
+<!--                                                <span class="text-muted">8m 42s</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="accordion__menu-link active">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">Introduction to TypeScript</a>-->
+<!--                                                <span class="text-muted">50m 13s</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">Comparing Angular to AngularJS</a>-->
+<!--                                                <span class="text-muted">12m 10s</span>-->
+<!--                                            </div>-->
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-take-quiz.html">Quiz: Getting Started With Angular</a>-->
+<!--                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="">
+<!--                                        <a href="#"-->
+<!--                                           class="accordion__toggle collapsed"-->
+<!--                                           data-toggle="collapse"-->
+<!--                                           data-target="#course-toc-3"-->
+<!--                                           data-parent="#parent">-->
+<!--                                            <span class="flex">Creating and Communicating Between Angular Components</span>-->
+<!--                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>-->
+<!--                                        </a>-->
+<!--                                        <div class="accordion__menu collapse"-->
+<!--                                             id="course-toc-3">-->
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">Angular Components</a>-->
+<!--                                                <span class="text-muted">04:23</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+<!--                                    <div class="accordion__item">-->
+<!--                                        <a href="#"-->
+<!--                                           class="accordion__toggle collapsed"-->
+<!--                                           data-toggle="collapse"-->
+<!--                                           data-target="#course-toc-4"-->
+<!--                                           data-parent="#parent">-->
+<!--                                            <span class="flex">Exploring the Angular Template Syntax</span>-->
+<!--                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>-->
+<!--                                        </a>-->
+<!--                                        <div class="accordion__menu collapse"-->
+<!--                                             id="course-toc-4">-->
+<!--                                            <div class="accordion__menu-link">-->
+<!--                                                <i class="material-icons text-70 icon-16pt icon&#45;&#45;left">drag_handle</i>-->
+<!--                                                <a class="flex"-->
+<!--                                                   href="student-lesson.html">Template Syntax</a>-->
+<!--                                                <span class="text-muted">04:23</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                </div>
+
+<!--                                <a href="#"-->
+<!--                                   class="btn btn-outline-secondary mb-24pt mb-sm-0">Add Section</a>-->
+
+                            <div class="col-md-4">
+                                <div class="card ">
+                                    <div class=" card-header text-center" style="border-radius: .5rem .5rem .5rem .5rem;">
+                                       {% if course %}
+                                        <input class="btn btn-accent" type="submit" value="update">
+                                        {% else %}
+                                        <input class="btn btn-accent" type="submit" value="save">
+                                        {% endif %}
+                                    </div>
+                                  </div>
+                                </div>
+<!--                        -->
+<!--                            <div class="col-md-4">-->
+
+<!--&lt;!&ndash;                                <div class="card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class=" card-header text-center" style="border-radius: .5rem .5rem .5rem .5rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <input class="btn btn-accent" type="submit" value="Save">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="list-group list-group-flush">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="list-group-item d-flex">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <a class="flex"&ndash;&gt;-->
+<!--&lt;!&ndash;                                               href="#"><strong>Save Draft</strong></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <i class="material-icons text-muted">check</i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="list-group-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <a href="#"&ndash;&gt;-->
+<!--&lt;!&ndash;                                               class="text-danger"><strong>Delete Course</strong></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--                                <div class="page-separator">-->
+<!--                                    <div class="page-separator__text">Video</div>-->
+<!--                                </div>-->
+
+<!--                                <div class="card">-->
+<!--                                    <div class="embed-responsive embed-responsive-16by9">-->
+<!--                                        <iframe class="embed-responsive-item"-->
+<!--                                                src="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"-->
+<!--                                                allowfullscreen=""></iframe>-->
+<!--                                    </div>-->
+<!--                                    <div class="card-body">-->
+<!--                                        <label class="form-label">URL</label>-->
+<!--                                        <input type="text"-->
+<!--                                               class="form-control"-->
+<!--                                               name="Video_link"-->
+<!--                                               placeholder="Enter Video URL">-->
+<!--                                        <small class="form-text text-muted">Enter a valid video URL.</small>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="page-separator">-->
+<!--                                    <div class="page-separator__text">image</div>-->
+<!--                                </div>-->
+
+<!--                                <div class="card">-->
+<!--                                    <div class="embed-responsive embed-responsive-16by9">-->
+<!--                                        <iframe class="embed-responsive-item"-->
+<!--                                                src="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"-->
+<!--                                                allowfullscreen=""></iframe>-->
+<!--                                    </div>-->
+<!--                                    <div class="card-body">-->
+<!--                                        <label class="form-label">img</label>-->
+<!--                                        <br>-->
+<!--                                        <input type="file"-->
+<!--                                               class=""-->
+<!--                                               name="image_file"-->
+<!--                                              >-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--&lt;!&ndash;                                <div class="page-separator">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="page-separator__text">Options</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <div class="card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <label class="form-label">Category</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <select name="category"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    class="form-control custom-select">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option value="vuejs">VueJs</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option value="vuejs">Angular</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option value="vuejs">React</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <small class="form-text text-muted">Select a category.</small>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <label class="form-label">Price</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <div class="col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <div class="input-group form-inline">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                        <span class="input-group-prepend"><span class="input-group-text">$</span></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                        <input type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                               class="form-control"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                               name="price">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="form-group mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <label class="form-label"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                   for="select03">Tags</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <select id="select03"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    data-toggle="select"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    multiple&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option selected="">JavaScript</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option selected="">Angular</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option>Bootstrap</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option>CSS</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <option>HTML</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <small class="form-text text-muted">Select one or more tags.</small>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--                            </div>-->
                         </div>
 
                     </div>
@@ -626,7 +842,7 @@
                 <div class="container page__container page-section d-flex flex-column">
                     <p class="text-70 brand mb-24pt">
                         <img class="brand-icon"
-                             src="../../public/images/logo/black-70@2x.png"
+                             src="/static/luma/public/images/logo/black-70@2x.png"
                              width="30"
                              alt="Luma"> Luma
                     </p>
@@ -658,11 +874,11 @@
 
                     <a href="index.html"
                        class="sidebar-brand ">
-                        <!-- <img class="sidebar-brand-icon" src="../../public/images/illustration/teacher/128/white.svg" alt="Luma"> -->
+                        <!-- <img class="sidebar-brand-icon" src="/static/luma/public/images/illustration/teacher/128/white.svg" alt="Luma"> -->
 
                         <span class="avatar avatar-xl sidebar-brand-icon h-auto">
 
-                            <span class="avatar-title rounded bg-primary"><img src="../../public/images/illustration/teacher/128/white.svg"
+                            <span class="avatar-title rounded bg-primary"><img src="/static/luma/public/images/illustration/teacher/128/white.svg"
                                      class="img-fluid"
                                      alt="logo" /></span>
 
@@ -1522,38 +1738,56 @@
                 </div>
             </div>
         </div>
+</form>
 
         <!-- // END Drawer -->
 
         <!-- jQuery -->
-        <script src="../../public/vendor/jquery.min.js"></script>
+        <script src="/static/luma/public/vendor/jquery.min.js"></script>
 
         <!-- Bootstrap -->
-        <script src="../../public/vendor/popper.min.js"></script>
-        <script src="../../public/vendor/bootstrap.min.js"></script>
+        <script src="/static/luma/public/vendor/popper.min.js"></script>
+        <script src="/static/luma/public/vendor/bootstrap.min.js"></script>
 
         <!-- Perfect Scrollbar -->
-        <script src="../../public/vendor/perfect-scrollbar.min.js"></script>
+        <script src="/static/luma/public/vendor/perfect-scrollbar.min.js"></script>
 
         <!-- DOM Factory -->
-        <script src="../../public/vendor/dom-factory.js"></script>
+        <script src="/static/luma/public/vendor/dom-factory.js"></script>
 
         <!-- MDK -->
-        <script src="../../public/vendor/material-design-kit.js"></script>
+        <script src="/static/luma/public/vendor/material-design-kit.js"></script>
 
         <!-- App JS -->
-        <script src="../../public/js/app.js"></script>
+        <script src="/static/luma/public/js/app.js"></script>
 
         <!-- Preloader -->
-        <script src="../../public/js/preloader.js"></script>
+        <script src="/static/luma/public/js/preloader.js"></script>
 
         <!-- Quill -->
-        <script src="../../public/vendor/quill.min.js"></script>
-        <script src="../../public/js/quill.js"></script>
+        <script src="/static/luma/public/vendor/quill.min.js"></script>
+        <script src="/static/luma/public/js/quill.js"></script>
         <!-- Select2 -->
-        <script src="../../public/vendor/select2/select2.min.js"></script>
-        <script src="../../public/js/select2.js"></script>
-
+        <script src="/static/luma/public/vendor/select2/select2.min.js"></script>
+        <script src="/static/luma/public/js/select2.js"></script>
     </body>
+
+<script>
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(718)
+                        .height(404);
+
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
 
 </html>
