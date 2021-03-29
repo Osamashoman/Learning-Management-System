@@ -13,12 +13,17 @@ from classroom.models import Course
 
 def home(request):
     c = Course.objects.all()
-    name ="Ahmad"
+    name = "Ahmad"
     Pho = 788386675
-    print(c)
-    context = {"courses": c, "name": name ,"Phone": Pho, }
+
+    context = {"courses": c, "name": name, "Phone": Pho, }
     return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
 
+
+def index(request):
+    c = Course.objects.all()
+    context =  {"courses": c}
+    return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
 
 def upload(fileToUpload , x):

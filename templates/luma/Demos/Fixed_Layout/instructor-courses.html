@@ -374,7 +374,7 @@ DESIGN COURSES
                         <div class="row"
                              role="tablist">
                             <div class="col-auto">
-                                <a href="instructor-edit-course.html"
+                                <a href="{% url 'courses' %}"
                                    class="btn btn-outline-secondary">Add Course</a>
                             </div>
                         </div>
@@ -386,7 +386,7 @@ DESIGN COURSES
 
                     <div class="page-separator">
                         <div class="page-separator__text">Development Courses</div>
-                    </div>
+                    </div>F
 
                     <div class="row">
                             {% for c in courses %}
@@ -396,10 +396,10 @@ DESIGN COURSES
                                  data-partial-height="44"
                                  data-toggle="popover"
                                  data-trigger="click">
-                                <a href="instructor-edit-course.html"
+                                <a href="{% url 'update-course' course_id=c.id %}"
                                    class="js-image"
                                    data-position="">
-                                    <img src="/static/luma/public/images/paths/swift_430x168.png"
+                                    <img src="https://imgcourses.s3.amazonaws.com/{{c.image_key}}"
                                          alt="course">
                                     <span class="overlay__content align-items-start justify-content-start">
                                         <span class="overlay__action card-body d-flex align-items-center">
@@ -413,9 +413,9 @@ DESIGN COURSES
                                         <div class="d-flex">
                                             <div class="flex">
                                                 <a class="card-title mb-4pt"
-                                                   href="instructor-edit-course.html">{{c.title}}</a>
+                                                   href="{% url 'update-course' course_id=c.id %}">{{c.title}}</a>
                                             </div>
-                                            <a href="instructor-edit-course.html"
+                                            <a href="{% url 'update-course' course_id=c.id %}"
                                                class="ml-4pt material-icons text-20 card-course__icon-favorite">edit</a>
                                         </div>
                                         <div class="d-flex">
@@ -490,7 +490,7 @@ DESIGN COURSES
                                         </div>
                                     </div>
                                     <div class="col text-right">
-                                        <a href="instructor-edit-course.html"
+                                        <a href="{% url 'update-course' course_id=c.id %}"
                                            class="btn btn-primary">Edit course</a>
                                     </div>
                                 </div>
