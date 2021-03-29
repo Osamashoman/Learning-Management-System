@@ -375,13 +375,19 @@
                                 {% endif %}
                                 <ol class="breadcrumb p-0 m-0">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-
+                                    {% if course %}
                                     <li class="breadcrumb-item active">
+
+                                        update Course
+
+                                    </li>
+                                    {% else %}
+                                     <li class="breadcrumb-item active">
 
                                         create Course
 
                                     </li>
-
+                                    {% endif %}
                                 </ol>
 
                             </div>
@@ -398,7 +404,9 @@
                                 <div class="page-separator">
                                     <div class="page-separator__text">Basic information</div>
                                 </div>
-
+                                {% if course %}
+                                    <input type="hidden" name="course_id" value="{{course.id}}">
+                                {% endif %}
                                 <label class="form-label">Course title</label>
                                 <div class="form-group mb-24pt">
                                     {% if course %}
@@ -517,35 +525,71 @@
                                 <div class="page-separator">
                                     <div class="page-separator__text">image</div>
                                 </div>
-
+                                {% if course %}
                                 <div class="card">
                                     <div class="embed-responsive embed-responsive-16by9">
 <!--                                        <iframe class="embed-responsive-item"-->
 <!--                                                id="blah" src=""-->
 <!--                                                allowfullscreen=""></iframe>-->
+
                                         <img class="embed-responsive-item" id="blah" src="https://via.placeholder.com/150"
                                         >
+
+
+
                                     </div>
                                     <div class="card-body">
                                         <label class="form-label">img</label>
                                         <br>
-                                        {% if course %}
+
+                                        <input type="test"
+                                               class=""
+                                               name="image_file"
+                                               onchange="readURL(this);"
+                                               value="{{ course.image_key }}"
+                                              >
                                         <input type="file"
                                                class=""
                                                name="image_file"
                                                onchange="readURL(this);"
-                                               value="{{course.image_key}}"
+                                               value="{{ course.image_key }}"
                                               >
-                                        {% else %}
-                                          <input type="file"
-                                               class=""
-                                               name="image_file"
-                                               onchange="readURL(this);"
-                                              >
-                                        {% endif%}
+
+
+
 
                                     </div>
                                 </div>
+                                          {% else %}
+                                          <div class="card">
+                                    <div class="embed-responsive embed-responsive-16by9">
+<!--                                        <rame class="embed-responsive-item"-->
+<!--                                                id="blah" src=""-->
+<!--                                                allowfullscreen=""></iframe>-->
+
+                                        <img class="embed-responsive-item" id="blah" src="https://via.placeholder.com/150"
+                                        >
+
+
+
+                                    </div>
+                                    <div class="card-body">
+                                        <label class="form-label">img</label>
+                                        <br>
+
+                                        <input type="file"
+                                               class=""
+                                               name="image_file"
+                                               onchange="readURL(this);"
+
+                                              >
+
+
+
+
+                                    </div>
+                                </div>
+                                           {% endif%}
 
 <!--                                <div class="page-separator">-->
 <!--                                    <div class="page-separator__text">Options</div>-->
