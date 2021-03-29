@@ -1,8 +1,8 @@
-import os
+
 
 import boto3
 from django.shortcuts import render, redirect
-from camp200.settings import AWS_ACCESS_KEY, AWS_SECRET_KEY, S3_BUCKET
+
 
 
 # Create your views here.
@@ -25,27 +25,32 @@ def upload(fileToUpload , x):
     return f"course-{x}.jpg"
 
 def courses(request,course_id=None):
-    print(course_id)
+
 
 
     if request.method == 'POST':
-
-
+        course_id = request.POST.get('course_id')
 
         Title = request.POST['Course_title']
         Description = request.POST['Description']
         Video_link = request.POST['Video_link']
         Price = request.POST['price']
-
-        Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
-        course_id = Course.objects.get(title=Title)
-
         fileToUpload = request.FILES.get('image_file')
-        image_key = upload(fileToUpload,course_id.id)
+        if course_id :
+            course= Course.objects.filter(id=course_id).update(title=Title, description=Description, promo_video=Video_link, price=Price)
 
-        Course.objects.filter(id=course_id.id).update(image_key=image_key)
+            if request.FILES.get('image_file'):
+                image_key = upload(fileToUpload, course_id.id)
 
-        return redirect(courses)
+
+        else:
+            course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
+
+            image_key = upload(fileToUpload, course.id)
+
+            Course.objects.filter(id=course_id.id).update(image_key=image_key)
+
+        return redirect(courses ,course_id=course_id)
     elif request.method == 'GET':
         context = {}
         if course_id:

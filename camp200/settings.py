@@ -94,9 +94,6 @@ DATABASES = {
     }
 }
 
-AWS_ACCESS_KEY = 'AKIA4RTB2YTTOFUBDLMI'
-AWS_SECRET_KEY = '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'
-S3_BUCKET = 'imgcourses'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
