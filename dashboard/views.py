@@ -21,12 +21,6 @@ def home(request):
 
 
 
-
-def home(request):
-    return render(request, 'luma/Demos/Fixed_Layout/index.html')
-
-
-
 def upload(fileToUpload , x):
 
     client = boto3.client("s3",
