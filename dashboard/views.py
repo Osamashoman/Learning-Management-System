@@ -1,3 +1,6 @@
+
+
+import boto3
 from django.shortcuts import render, redirect
 from django.contrib import messages
 # Create your views here.
@@ -73,7 +76,7 @@ def courses(request,course_id=None):
             course= Course.objects.filter(id=course_id).update(title=Title, description=Description, promo_video=Video_link, price=Price)
 
             if request.FILES.get('image_file'):
-                image_key = upload(fileToUpload, course_id.id)
+                image_key = upload(fileToUpload, course_id)
 
 
         else:
