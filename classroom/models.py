@@ -2,10 +2,11 @@ from django.db import models
 
 
 class Course(models.Model):
+
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	promo_video = models.CharField(max_length=200)
-	image_key = models.CharField(max_length=200)
+	image_key = models.CharField(max_length=200 ,blank=True)
 	price = models.FloatField()
 
 
