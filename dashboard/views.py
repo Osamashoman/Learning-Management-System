@@ -35,40 +35,35 @@ def courses(request):
 
 
 def course_crud(request, course_id=None):
-	if request.method == 'POST':
 		course_id = request.POST.get('course_id')
-
-		Title = request.POST['Course_title']
-		Description = request.POST['Description']
-		Video_link = request.POST['Video_link']
-		Price = request.POST['price']
 		fileToUpload = request.FILES.get('image_file')
-		if course_id:
-			image_key = str(course_id) + '.jpg'
 
-			course = Course.objects.filter(id=course_id).update(title=Title, description=Description,
-																promo_video=Video_link, price=Price)
+		defaults = {'title': request.POST["Course_title"],
+					'description': request.POST["Description"],
+					'promo_video': request.POST['Video_link'],
+					'price': request.POST['price']
+					}
 
-			if request.FILES.get('image_file'):
-				s3 = S3Manager()
-				s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
+		course, created =Course.objects.update_or_create(id=course_id, defaults=defaults)
 
-			return redirect(course_crud, course_id=course_id)
-
-		else:
+		if fileToUpload:
 			s3 = S3Manager()
-			course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
-
-			image_key = str(course.id) + '.jpg'
+			image_key = 'course'+ str(course.id) + '.jpg'
 			s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
+			course.image_key = image_key
+			course.save()
 
-			Course.objects.filter(id=course.id).update(image_key=image_key)
-			return redirect(course_crud, course_id=course.id)
-	elif request.method == 'GET':
-		context = {}
-		if course_id:
-			context['course'] = Course.objects.get(id=course_id)
-		return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
+		return redirect(course_form, course_id=course.id)
+
+
+
+def course_form(request,course_id=None):
+	context = {}
+
+	if course_id:
+		context['course'] = Course.objects.get(id=course_id)
+	return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
+
 
 
 def course_view(request, course_id=None):

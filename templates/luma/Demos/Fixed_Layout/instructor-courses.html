@@ -374,7 +374,7 @@ DESIGN COURSES
                         <div class="row"
                              role="tablist">
                             <div class="col-auto">
-                                <a href="{% url 'create-course' %}"
+                                <a href="{% url 'create-course-form' %}"
                                    class="btn btn-outline-secondary">Add Course</a>
                             </div>
                         </div>
@@ -396,7 +396,7 @@ DESIGN COURSES
                                  data-partial-height="44"
                                  data-toggle="popover"
                                  data-trigger="click">
-                                <a href="{% url 'update-course' course_id=c.id %}"
+                                <a href="{% url 'update-course-form' course_id=c.id %}"
                                    class="js-image"
                                    data-position="">
                                     <img src="https://imgcourses.s3.amazonaws.com/{{c.image_key}}"
@@ -413,9 +413,9 @@ DESIGN COURSES
                                         <div class="d-flex">
                                             <div class="flex">
                                                 <a class="card-title mb-4pt"
-                                                   href="{% url 'update-course' course_id=c.id %}">{{c.title}}</a>
+                                                   href="{% url 'update-course-form' course_id=c.id %}">{{c.title}}</a>
                                             </div>
-                                            <a href="{% url 'update-course' course_id=c.id %}"
+                                            <a href="{% url 'update-course-form' course_id=c.id %}"
                                                class="ml-4pt material-icons text-20 card-course__icon-favorite">edit</a>
                                         </div>
                                         <div class="d-flex">
@@ -490,7 +490,7 @@ DESIGN COURSES
                                         </div>
                                     </div>
                                     <div class="col text-right">
-                                        <a href="{% url 'update-course' course_id=c.id %}"
+                                        <a href="{% url 'update-course-form' course_id=c.id %}"
                                            class="btn btn-primary">Edit course</a>
                                     </div>
                                 </div>
