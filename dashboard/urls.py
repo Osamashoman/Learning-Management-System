@@ -3,13 +3,11 @@ from django.urls import path
 from dashboard import views
 
 urlpatterns = [
-    path('lessons/<int:section_id>/', views.lesson_form, name='lesson'),
-    path('lessons/<int:section_id>/<int:lesson_id>/', views.lesson_form, name='update_lesson'),
-    path('create_lesson', views.create_lesson, name='createlesson'),
-    path('Homepage', views.home),
-    path('courses', views.courses, name='courses'),
-    path('courses/<int:course_id>/', views.courses, name='update-course'),
-    path('bill', views.index),
-    path('show_course/<int:course_id>/', views.course_view)
-
+    path('lesson/<int:section_id>/', views.lesson, name='lesson'),
+    path('lesson/<int:section_id>/<int:lesson_id>/', views.lesson, name='update-lesson'),
+    path('lesson/create_or_update/', views.create_or_update_lesson, name='create-lesson'),
+    path('courses/', views.courses),
+    path('course/create/', views.course_crud, name='create-course'),
+    path('course/update/<int:course_id>/', views.course_crud, name='update-course'),
+    path('course/view/<int:course_id>/', views.course_view)
 ]

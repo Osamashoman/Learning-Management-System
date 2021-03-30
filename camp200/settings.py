@@ -135,3 +135,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'templates')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+
+
+# AWS
+
+AWS_ACCESS_KEY = "AKIA4RTB2YTTOFUBDLMI"
+AWS_SECRET_KEY = "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"
+COURSES_IMAGES_BUCKET = "imgcourses"
+

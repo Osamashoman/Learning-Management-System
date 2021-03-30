@@ -63,7 +63,7 @@
     </head>
 
     <body class="layout-sticky-subnav layout-default ">
-<form action="{% url 'courses' %}" method="POST" enctype="multipart/form-data">
+<form action="{% url 'create-course' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
         <div class="preloader">
             <div class="sk-chase">

@@ -1,102 +1,81 @@
-import boto3
 import re
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
-# Create your views here.
-from django.views.decorators.csrf import csrf_exempt
-import boto3
 from classroom.models import Course, Lesson
+from dashboard.utilty import S3Manager
 
 
-def lesson_form(request, section_id, lesson_id=None):
-    context = {"section_id": section_id, "lesson_id": lesson_id}
-    if lesson_id:
-        context['lesson_obj'] = Lesson.objects.get(id=lesson_id)
+def lesson(request, section_id, lesson_id=None):
+	context = {"section_id": section_id, "lesson_id": lesson_id}
+	if lesson_id:
+		context['lesson_obj'] = Lesson.objects.get(id=lesson_id)
 
-    return render(request, 'luma/Demos/Fixed_Layout/create_lesson.html', context)
-
-
-@csrf_exempt
-def create_lesson(request):
-    type = request.POST["ltype"]
-    link = request.POST['link']
-    title = request.POST["title"]
-    lesson_id = request.POST.get('lesson_id')
-    # get or createa
-    if lesson_id:
-        Lesson.objects.filter(id=lesson_id).update(type=type, title=title, link=link, duration=0,
-                                                   section_id=request.POST['section_id'])
-    else:
-        Lesson.objects.create(type=type, title=title, link=link, duration=0, section_id=request.POST['section_id'])
-
-    messages.add_message(request, messages.INFO, 'Hello world.')
-
-    return redirect('lesson', section_id=request.POST['section_id'])
+	return render(request, 'luma/Demos/Fixed_Layout/create_lesson.html', context)
 
 
-def home(request):
-    c = Course.objects.all()
-    name = "Ahmad"
-    Pho = 788386675
+def create_or_update_lesson(request):
+	lesson_id = request.POST.get('lesson_id')
 
-    context = {"courses": c, "name": name, "Phone": Pho, }
-    return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
+	defaults = {'title': request.POST["title"],
+				'type': request.POST["type"],
+				'link': request.POST['link'],
+				'section_id': request.POST['section_id']}
 
+	Lesson.objects.update_or_create(id=lesson_id, defaults=defaults)
 
-def index(request):
-    c = Course.objects.all()
-    context = {"courses": c}
-    return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
-
-
-def upload(fileToUpload, x):
-    client = boto3.client("s3",
-                          aws_access_key_id="AKIA4RTB2YTTOFUBDLMI",
-                          aws_secret_access_key="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")
-
-    client.upload_fileobj(fileToUpload, "imgcourses", f"course-{x}.jpg")
-    return f"course-{x}.jpg"
+	messages.add_message(request, messages.INFO, 'Hello world.')
+	return redirect('lesson', section_id=request.POST['section_id'])
 
 
-def courses(request, course_id=None):
-    if request.method == 'POST':
-        course_id = request.POST.get('course_id')
+def courses(request):
+	courses = Course.objects.all()
+	context = {"courses": courses}
+	return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
 
-        Title = request.POST['Course_title']
-        Description = request.POST['Description']
-        Video_link = request.POST['Video_link']
-        Price = request.POST['price']
-        fileToUpload = request.FILES.get('image_file')
-        if course_id:
-            course = Course.objects.filter(id=course_id).update(title=Title, description=Description,
-                                                                promo_video=Video_link, price=Price)
 
-            if request.FILES.get('image_file'):
-                image_key = upload(fileToUpload, course_id)
+def course_crud(request, course_id=None):
+	if request.method == 'POST':
+		course_id = request.POST.get('course_id')
 
-            return redirect(courses, course_id=course_id)
+		Title = request.POST['Course_title']
+		Description = request.POST['Description']
+		Video_link = request.POST['Video_link']
+		Price = request.POST['price']
+		fileToUpload = request.FILES.get('image_file')
+		if course_id:
+			image_key = str(course_id) + '.jpg'
 
-        else:
-            course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
+			course = Course.objects.filter(id=course_id).update(title=Title, description=Description,
+																promo_video=Video_link, price=Price)
 
-            image_key = upload(fileToUpload, course.id)
+			if request.FILES.get('image_file'):
+				s3 = S3Manager()
+				s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
 
-            Course.objects.filter(id=course.id).update(image_key=image_key)
+			return redirect(course_crud, course_id=course_id)
 
-            return redirect(courses, course_id=course.id)
-    elif request.method == 'GET':
-        context = {}
-        if course_id:
-            context['course'] = Course.objects.get(id=course_id)
-        return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
+		else:
+			s3 = S3Manager()
+			course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
 
+			image_key = str(course.id) + '.jpg'
+			s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
+
+			Course.objects.filter(id=course.id).update(image_key=image_key)
+			return redirect(course_crud, course_id=course.id)
+	elif request.method == 'GET':
+		context = {}
+		if course_id:
+			context['course'] = Course.objects.get(id=course_id)
+		return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
 
 
 def course_view(request, course_id=None):
-    # Show course View
-    # Get course from database
-    course = Course.objects.get(id=course_id)
-    vimeo_video_id = re.search('(\/)(\d+$)', course.promo_video)
-    context = {"course": course, 'vimeo_id': vimeo_video_id.group(2)}
-    print(context)
-    return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
+	# Show course View
+	# Get course from database
+	course = Course.objects.get(id=course_id)
+	vimeo_video_id = re.search('(\/)(\d+$)', course.promo_video)
+	context = {"course": course, 'vimeo_id': vimeo_video_id.group(2)}
+	print(context)
+	return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
