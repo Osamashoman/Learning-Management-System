@@ -414,12 +414,14 @@
                                            class="form-control form-control-lg"
                                            placeholder="Course title"
                                            name="Course_title"
-                                    value="{{ course.title}}">
+                                    value="{{ course.title}}"
+                                    required>
                                     {% else  %}
                                       <input type="text"
                                            class="form-control form-control-lg"
                                            placeholder="Course title"
                                            name="Course_title"
+                                             required
                                     >
                                     {% endif %}
 
@@ -437,13 +439,15 @@
                                            class="form-control form-control-lg"
                                            placeholder="Description"
                                            name="Description"
-                                           value="{{ course.description }}">
+                                           value="{{ course.description }}"
+                                          required>
                                         {% else %}
                                           <input type="text"
                                             STYLE="height:100px ;"
                                             class="form-control form-control-lg"
                                             placeholder="Description"
-                                            name="Description">
+                                            name="Description"
+                                          required>
                                         {% endif %}
 <!--                                    <small class="form-text text-muted">Please see our <a href="">course title guideline</a></small>-->
                                 </div>
@@ -459,12 +463,14 @@
                                                                class="form-control"
                                                                name="price"
                                                                value="{{course.price}}"
-                                                                step="0.1">
+                                                                step="0.1"
+                                                        required>
                                                         {% else %}
                                                         <input type="number"
                                                                class="form-control"
                                                                name="price"
-                                                               step="0.1">
+                                                               step="0.1"
+                                                               required    >
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -497,11 +503,15 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="embed-responsive embed-responsive-16by9">
+                                    <div class="">
+                                         {% if course %}
+                                        <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item"
+                                                src="https://player.vimeo.com/video/{{ vimeo_id }}?title=0&amp;byline=0&amp;portrait=0"
+                                                ></iframe></div>
+                                        {% else %}
 
-                                                src="https://player.vimeo.com/video/97243285?title=0&amp;byline=0&amp;portrait=0"
-                                                allowfullscreen=""></iframe>
+                                         {% endif %}
                                     </div>
 
                                     <div class="card-body">
@@ -511,15 +521,17 @@
                                                class="form-control"
                                                name="Video_link"
                                                placeholder="Enter Video URL"
-                                        value="{{course.promo_video}}">
+                                        value="{{course.promo_video}}"
+                                        required>
                                         {% else %}
                                         <input type="text"
                                                class="form-control"
                                                name="Video_link"
                                                placeholder="Enter Video URL"
+                                               required
                                         >
                                         {% endif %}
-                                        <small class="form-text text-muted">Enter a valid video URL.</small>
+
                                     </div>
                                 </div>
                                 <div class="page-separator">
@@ -532,7 +544,7 @@
 <!--                                                id="blah" src=""-->
 <!--                                                allowfullscreen=""></iframe>-->
 
-                                        <img class="embed-responsive-item" id="blah" src="https://via.placeholder.com/150"
+                                        <img class="embed-responsive-item" id="blah" src="https://{{ BUCKET }}.s3.amazonaws.com/{{ image_key }}"
                                         >
 
 
@@ -542,18 +554,14 @@
                                         <label class="form-label">img</label>
                                         <br>
 
-                                        <input type="test"
-                                               class=""
-                                               name="image_file"
-                                               onchange="readURL(this);"
-                                               value="{{ course.image_key }}"
-                                              >
+
                                         <input type="file"
                                                class=""
                                                name="image_file"
                                                onchange="readURL(this);"
                                                value="{{ course.image_key }}"
-                                              >
+
+                                        required>
 
 
 
@@ -562,13 +570,12 @@
                                 </div>
                                           {% else %}
                                           <div class="card">
-                                    <div class="embed-responsive embed-responsive-16by9">
-<!--                                        <rame class="embed-responsive-item"-->
+                                    <div class="">
+<!--                                        <iframe class="embed-responsive-item"-->
 <!--                                                id="blah" src=""-->
 <!--                                                allowfullscreen=""></iframe>-->
 
-                                        <img class="embed-responsive-item" id="blah" src="https://via.placeholder.com/150"
-                                        >
+
 
 
 
@@ -581,7 +588,7 @@
                                                class=""
                                                name="image_file"
                                                onchange="readURL(this);"
-
+                                               required
                                               >
 
 
@@ -882,24 +889,24 @@
 
             <!-- Footer -->
 
-            <div class="bg-white border-top-2 mt-auto">
-                <div class="container page__container page-section d-flex flex-column">
-                    <p class="text-70 brand mb-24pt">
-                        <img class="brand-icon"
-                             src="/static/luma/public/images/logo/black-70@2x.png"
-                             width="30"
-                             alt="Luma"> Luma
-                    </p>
-                    <p class="measure-lead-max text-50 small mr-8pt">Luma is a beautifully crafted user interface for modern Education Platforms, including Courses & Tutorials, Video Lessons, Student and Teacher Dashboard, Curriculum Management, Earnings and Reporting, ERP, HR, CMS, Tasks, Projects, eCommerce and more.</p>
-                    <p class="mb-8pt d-flex">
-                        <a href=""
-                           class="text-70 text-underline mr-8pt small">Terms</a>
-                        <a href=""
-                           class="text-70 text-underline small">Privacy policy</a>
-                    </p>
-                    <p class="text-50 small mt-n1 mb-0">Copyright 2019 &copy; All rights reserved.</p>
-                </div>
-            </div>
+         <div class="bg-white border-top-2 mt-auto">
+             <div class="container page__container page-section d-flex flex-column">
+<!--                    <p class="text-70 brand mb-24pt">-->
+<!--                        <img class="brand-icon"-->
+<!--                             src="/static/luma/public/images/logo/black-70@2x.png"-->
+<!--                             width="30"-->
+<!--                             alt="Luma"> Luma-->
+<!--                    </p>-->
+<!--                    <p class="measure-lead-max text-50 small mr-8pt">Luma is a beautifully crafted user interface for modern Education Platforms, including Courses & Tutorials, Video Lessons, Student and Teacher Dashboard, Curriculum Management, Earnings and Reporting, ERP, HR, CMS, Tasks, Projects, eCommerce and more.</p>-->
+<!--                    <p class="mb-8pt d-flex">-->
+<!--                        <a href=""-->
+<!--                           class="text-70 text-underline mr-8pt small">Terms</a>-->
+<!--                        <a href=""-->
+<!--                           class="text-70 text-underline small">Privacy policy</a>-->
+<!--                    </p>-->
+<!--                    <p class="text-50 small mt-n1 mb-0">Copyright 2019 &copy; All rights reserved.</p>-->
+s               </div>
+          </div>
 
             <!-- // END Footer -->
 

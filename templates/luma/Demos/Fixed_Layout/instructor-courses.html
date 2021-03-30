@@ -386,7 +386,7 @@ DESIGN COURSES
 
                     <div class="page-separator">
                         <div class="page-separator__text">Development Courses</div>
-                    </div>F
+                    </div>
 
                     <div class="row">
                             {% for c in courses %}
@@ -399,7 +399,7 @@ DESIGN COURSES
                                 <a href="{% url 'update-course-form' course_id=c.id %}"
                                    class="js-image"
                                    data-position="">
-                                    <img src="https://imgcourses.s3.amazonaws.com/{{c.image_key}}"
+                                    <img  src="https://{{BUCKET}}.s3.amazonaws.com/{{c.image_key}}"
                                          alt="course">
                                     <span class="overlay__content align-items-start justify-content-start">
                                         <span class="overlay__action card-body d-flex align-items-center">

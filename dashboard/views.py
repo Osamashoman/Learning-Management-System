@@ -30,14 +30,14 @@ def create_or_update_lesson(request):
 
 def courses(request):
 	courses = Course.objects.all()
-	context = {"courses": courses}
+	context = {"courses": courses ,'BUCKET':settings.COURSES_IMAGES_BUCKET}
 	return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
 
 
 def course_crud(request, course_id=None):
 		course_id = request.POST.get('course_id')
 		fileToUpload = request.FILES.get('image_file')
-
+		#
 		defaults = {'title': request.POST["Course_title"],
 					'description': request.POST["Description"],
 					'promo_video': request.POST['Video_link'],
@@ -58,10 +58,12 @@ def course_crud(request, course_id=None):
 
 
 def course_form(request,course_id=None):
-	context = {}
-
+	context ={}
 	if course_id:
-		context['course'] = Course.objects.get(id=course_id)
+		course = Course.objects.get(id=course_id)
+		re_result = re.search('(.com\/)([\d]+)', course.promo_video)
+		print(re_result)
+		context = {'course': Course.objects.get(id=course_id), 'vimeo_id': re_result.group(2), 'image_key': course.image_key,'BUCKET':settings.COURSES_IMAGES_BUCKET}
 	return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
 
 
