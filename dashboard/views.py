@@ -1,6 +1,5 @@
-
-
 import boto3
+import re
 from django.shortcuts import render, redirect
 from django.contrib import messages
 # Create your views here.
@@ -26,7 +25,7 @@ def create_lesson(request):
     # get or createa
     if lesson_id:
         Lesson.objects.filter(id=lesson_id).update(type=type, title=title, link=link, duration=0,
-                                                          section_id=request.POST['section_id'])
+                                                   section_id=request.POST['section_id'])
     else:
         Lesson.objects.create(type=type, title=title, link=link, duration=0, section_id=request.POST['section_id'])
 
@@ -46,24 +45,20 @@ def home(request):
 
 def index(request):
     c = Course.objects.all()
-    context =  {"courses": c}
+    context = {"courses": c}
     return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
 
-def upload(fileToUpload , x):
-
+def upload(fileToUpload, x):
     client = boto3.client("s3",
                           aws_access_key_id="AKIA4RTB2YTTOFUBDLMI",
                           aws_secret_access_key="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")
 
-
-    client.upload_fileobj( fileToUpload , "imgcourses", f"course-{x}.jpg")
+    client.upload_fileobj(fileToUpload, "imgcourses", f"course-{x}.jpg")
     return f"course-{x}.jpg"
 
-def courses(request,course_id=None):
 
-
-
+def courses(request, course_id=None):
     if request.method == 'POST':
         course_id = request.POST.get('course_id')
 
@@ -72,24 +67,36 @@ def courses(request,course_id=None):
         Video_link = request.POST['Video_link']
         Price = request.POST['price']
         fileToUpload = request.FILES.get('image_file')
-        if course_id :
-            course= Course.objects.filter(id=course_id).update(title=Title, description=Description, promo_video=Video_link, price=Price)
+        if course_id:
+            course = Course.objects.filter(id=course_id).update(title=Title, description=Description,
+                                                                promo_video=Video_link, price=Price)
 
             if request.FILES.get('image_file'):
                 image_key = upload(fileToUpload, course_id)
 
+            return redirect(courses, course_id=course_id)
 
         else:
             course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
 
             image_key = upload(fileToUpload, course.id)
 
-            Course.objects.filter(id=course_id.id).update(image_key=image_key)
+            Course.objects.filter(id=course.id).update(image_key=image_key)
 
-        return redirect(courses ,course_id=course_id)
+            return redirect(courses, course_id=course.id)
     elif request.method == 'GET':
         context = {}
         if course_id:
             context['course'] = Course.objects.get(id=course_id)
         return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
 
+
+
+def course_view(request, course_id=None):
+    # Show course View
+    # Get course from database
+    course = Course.objects.get(id=course_id)
+    vimeo_video_id = re.search('(\/)(\d+$)', course.promo_video)
+    context = {"course": course, 'vimeo_id': vimeo_video_id.group(2)}
+    print(context)
+    return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
