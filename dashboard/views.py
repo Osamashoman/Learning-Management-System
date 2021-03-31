@@ -4,7 +4,7 @@ import time
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from classroom.models import Course, Lesson
+from classroom.models import Course, Lesson, Section
 from dashboard.utilty import S3Manager, VimeoManager
 
 
@@ -79,5 +79,20 @@ def course_view(request, course_id=None):
     print(context)
     return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
 
+def create_section(request,course_id=None,section_id=None):
+	context={}
+	if course_id:
+		context = {'course_id': course_id,'section_id':section_id}
+	if section_id:
+		context['section'] = Section.objects.get(id=section_id)
+	return render(request ,"luma\Demos\Fixed_Layout\instructor-add-section.html" ,context =context)
 
+def create_or_update_section(request):
+	section_id = request.POST.get('section_id')
+	section_title = request.POST['section_title']
+	course_id = request.POST['course_id']
 
+	defaults = {'title': section_title, 'course_id': course_id}
+	section, created = Section.objects.update_or_create(id =section_id , defaults = defaults)
+
+	return redirect(create_section,course_id=course_id, section_id= section.id)
