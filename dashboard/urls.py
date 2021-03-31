@@ -1,12 +1,10 @@
 from django.urls import path
-
 from dashboard import views
 
 urlpatterns = [
     path('lesson/<int:section_id>/', views.lesson, name='lesson'),
     path('lesson/<int:section_id>/<int:lesson_id>/', views.lesson, name='update-lesson'),
     path('lesson/create_or_update/', views.create_or_update_lesson, name='create-lesson'),
-    path('lesson/video/<int:lesson_id>/', views.video_lesson, name='video_lesson'),
     path('courses/', views.courses),
     path('course/create/', views.course_form, name='create-course-form'),
     path('course/update/<int:course_id>/', views.course_form, name='update-course-form'),

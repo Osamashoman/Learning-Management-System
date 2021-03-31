@@ -36,13 +36,6 @@ def create_or_update_lesson(request):
     return redirect('lesson', section_id=request.POST['section_id'])
 
 
-def video_lesson(request, lesson_id=None):
-    lesson = Lesson.objects.get(id=lesson_id)
-    vimeo_video_id = re.search('(\/)(\d+$)', lesson.link)
-    context = {"lesson": lesson, 'vimeo_id': vimeo_video_id.group(2)}
-    return render(request, 'luma/Demos/Fixed_Layout_rtl/student-take-lesson.html', context)
-
-
 def courses(request):
     courses = Course.objects.all()
     context = {"courses": courses, 'BUCKET': settings.COURSES_IMAGES_BUCKET}
