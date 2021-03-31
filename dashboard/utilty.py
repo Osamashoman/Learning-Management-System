@@ -16,6 +16,9 @@ class S3Manager:
     def upload(self, file_obj, bucket, key):
         self.client.upload_fileobj(file_obj, bucket, key)
 
+    def delete(self, Bucket, Key):
+        self.client.delete_object(Bucket=Bucket,Key=Key)
+
 
 class VimeoManager:
     client_identifier = settings.VIMEO_CLIENT_ID
@@ -30,7 +33,7 @@ class VimeoManager:
         )
 
     def get_video_duration(self, video_id):
-        video_id =video_id
+        video_id = video_id
         about_me = self.v.get(f'/videos/{video_id}')
         duration = about_me.json()
         return duration['duration']
@@ -41,7 +44,7 @@ class VimeoManager:
             return: 483817264
         """
         result = re.search("(.com\/)([\d]+)", url)
-        video_id=result.group(2)
+        video_id = result.group(2)
         return video_id
 
     def get_vimeo_duration(self, url):
@@ -49,3 +52,9 @@ class VimeoManager:
         about_me = self.v.get(f'/videos/{video_id}')
         duration = about_me.json()
         return duration['duration']
+
+
+class S3ObjectsFormatters:
+    @staticmethod
+    def course_image(course_id):
+        return f'{course_id}.jpg'
