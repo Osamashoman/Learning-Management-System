@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'vzb+d(zq#96@tek-jk4$(n5iz^3mo%7it$h)ux8oni(@#9$(04'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -72,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'camp200.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -95,7 +92,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -114,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -128,7 +123,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -136,11 +130,14 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'templates')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
-
-
 # AWS
 
 AWS_ACCESS_KEY = "AKIA4RTB2YTTOFUBDLMI"
 AWS_SECRET_KEY = "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"
 COURSES_IMAGES_BUCKET = "imgcourses"
 
+# VIMEO
+VIMEO_CLIENT_ID = "e46be3a6476f77ced4f52fe308aca606b0a103cc"
+VIMEO_TOKEN = "4095fd2d54a0240ab70a231c3fdd2a43"
+
+VIMEO_CLIENT_SECRETS = "N5w4mxnwZqvLV9V1CpCCKctx0z/HeCK0aJS3K2rrjPDV291GKdrv1Pmh2HmDnz8pH1HjqQdEcu2uEuSXnm52f+M5B2Wd0TM0Opq0i4rIJ2rGF+k2rF6mJpG8IbHaxtsH"
