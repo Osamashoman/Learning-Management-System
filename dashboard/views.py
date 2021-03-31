@@ -35,49 +35,42 @@ def create_or_update_lesson(request):
 
 
 def courses(request):
-    courses = Course.objects.all()
-    context = {"courses": courses}
-    return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
-
+	courses = Course.objects.all()
+	context = {"courses": courses ,'BUCKET':settings.COURSES_IMAGES_BUCKET}
+	return render(request, 'luma/Demos/Fixed_Layout/instructor-courses.html', context)
 
 def course_crud(request, course_id=None):
-    if request.method == 'POST':
-        course_id = request.POST.get('course_id')
+		course_id = request.POST.get('course_id')
+		fileToUpload = request.FILES.get('image_file')
+		#
+		defaults = {'title': request.POST["Course_title"],
+					'description': request.POST["Description"],
+					'promo_video': request.POST['Video_link'],
+					'price': request.POST['price']
+					}
 
-        Title = request.POST['Course_title']
-        Description = request.POST['Description']
-        Video_link = request.POST['Video_link']
-        Price = request.POST['price']
-        fileToUpload = request.FILES.get('image_file')
-        if course_id:
-            image_key = str(course_id) + '.jpg'
+		course, created = Course.objects.update_or_create(id=course_id, defaults=defaults)
 
-            course = Course.objects.filter(id=course_id).update(title=Title, description=Description,
-                                                                promo_video=Video_link, price=Price)
+		if fileToUpload:
+			s3 = S3Manager()
+			image_key = 'course' + str(course.id) + '.jpg'
+			s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
+			course.image_key = image_key
+			course.save()
 
-            if request.FILES.get('image_file'):
-                s3 = S3Manager()
-                s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
+		return redirect(course_form, course_id=course.id)
 
-            return redirect(course_crud, course_id=course_id)
-
-        else:
-            s3 = S3Manager()
-            course = Course.objects.create(title=Title, description=Description, promo_video=Video_link, price=Price)
-
-            image_key = str(course.id) + '.jpg'
-            s3.upload(fileToUpload, settings.COURSES_IMAGES_BUCKET, image_key)
-
-            Course.objects.filter(id=course.id).update(image_key=image_key)
-            return redirect(course_crud, course_id=course.id)
-    elif request.method == 'GET':
-        context = {}
-        if course_id:
-            context['course'] = Course.objects.get(id=course_id)
-        return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
-
+def course_form(request,course_id=None):
+	context ={}
+	if course_id:
+		course = Course.objects.get(id=course_id)
+		re_result = re.search('(.com\/)([\d]+)', course.promo_video)
+		print(re_result)
+		context = {'course': Course.objects.get(id=course_id), 'vimeo_id': re_result.group(2), 'image_key': course.image_key,'BUCKET':settings.COURSES_IMAGES_BUCKET}
+	return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
 
 def course_view(request, course_id=None):
+
     # Show course View
     # Get course from database
     course = Course.objects.get(id=course_id)
