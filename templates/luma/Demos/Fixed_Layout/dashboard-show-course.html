@@ -437,8 +437,7 @@
                                 <div class="form-group mb-24pt">
                                     <input type="text"
                                            class="form-control form-control-lg"
-
-                                           value="{{course.duration}}"
+                                           value="{{course_time.tm_hour}}:{{course_time.tm_min}}:{{course_time.tm_hour}}"
                                     disabled>
                                 </div>
 
@@ -447,7 +446,7 @@
                                     <input type="text"
                                            class="form-control form-control-lg"
 
-                                           value="100 lesson"
+                                           value="{{lessons_count}} lessons"
                                     disabled>
                                     </div>
 
@@ -595,6 +594,20 @@ ss
                                                disabled>
                                     </div>
                                 </div>
+
+                                 <div class="card">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                    <img src="https://imgcourses.s3.amazonaws.com/{{course.image_key}}">
+                                    </div>
+                                    <div class="card-body">
+                                        <label class="form-label">URL photo</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               value="{{course.promo_video}}"
+                                               disabled>
+                                    </div>
+                                </div>
+
 
                                 <div class="page-separator">
                                     <div class="page-separator__text">Options</div>
