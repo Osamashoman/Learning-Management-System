@@ -11,7 +11,9 @@ urlpatterns = [
     path('course/update/<int:course_id>/', views.course_form, name='update-course-form'),
     path('course/create_or_update/', views.course_crud,name='create-or-update'),
     path('course/view/<int:course_id>/', views.course_view),
+    path('course/delete/<int:course_id>/',views.delete_course,name='delete-course'),
     path('section/<int:course_id>/<int:section_id>/', views.create_section , name= 'create-section'),
     path('section/<int:course_id>/', views.create_section , name= 'create-section'),
     path('section/create_or_update_section/', views.create_or_update_section, name= 'create_or_update_section')
 ]
+
