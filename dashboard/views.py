@@ -36,6 +36,13 @@ def create_or_update_lesson(request):
     return redirect('lesson', section_id=request.POST['section_id'])
 
 
+def video_lesson(request, lesson_id=None):
+    lesson = Lesson.objects.get(id=lesson_id)
+    vimeo_video_id = re.search('(\/)(\d+$)', lesson.link)
+    context = {"lesson": lesson, 'vimeo_id': vimeo_video_id.group(2)}
+    return render(request, 'luma/Demos/Fixed_Layout_rtl/student-take-lesson.html', context)
+
+
 def courses(request):
     courses = Course.objects.all()
     context = {"courses": courses, 'BUCKET': settings.COURSES_IMAGES_BUCKET}
@@ -64,18 +71,19 @@ def course_crud(request, course_id=None):
 
     return redirect(course_form, course_id=course.id)
 
-def course_form(request,course_id=None):
-	context ={}
-	if course_id:
-		course = Course.objects.get(id=course_id)
-		re_result = re.search('(.com\/)([\d]+)', course.promo_video)
-		print(re_result)
-		context = {'course': Course.objects.get(id=course_id), 'vimeo_id': re_result.group(2), 'image_key': course.image_key,'BUCKET':settings.COURSES_IMAGES_BUCKET}
-	return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
+
+def course_form(request, course_id=None):
+    context = {}
+    if course_id:
+        course = Course.objects.get(id=course_id)
+        re_result = re.search('(.com\/)([\d]+)', course.promo_video)
+        print(re_result)
+        context = {'course': Course.objects.get(id=course_id), 'vimeo_id': re_result.group(2),
+                   'image_key': course.image_key, 'BUCKET': settings.COURSES_IMAGES_BUCKET}
+    return render(request, 'luma/Demos/Fixed_Layout/instructor-edit-course.html', context=context)
 
 
 def course_view(request, course_id=None):
-
     # Show course View
     # Get course from database
     course = Course.objects.get(id=course_id)
@@ -83,23 +91,26 @@ def course_view(request, course_id=None):
     context = {"course": course, 'vimeo_id': vimeo_video_id.group(2)}
     return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
 
-def create_section(request,course_id=None,section_id=None):
-	context={}
-	if course_id:
-		context = {'course_id': course_id,'section_id':section_id}
-	if section_id:
-		context['section'] = Section.objects.get(id=section_id)
-	return render(request ,"luma\Demos\Fixed_Layout\instructor-add-section.html" ,context =context)
+
+def create_section(request, course_id=None, section_id=None):
+    context = {}
+    if course_id:
+        context = {'course_id': course_id, 'section_id': section_id}
+    if section_id:
+        context['section'] = Section.objects.get(id=section_id)
+    return render(request, "luma\Demos\Fixed_Layout\instructor-add-section.html", context=context)
+
 
 def create_or_update_section(request):
-	section_id = request.POST.get('section_id')
-	section_title = request.POST['section_title']
-	course_id = request.POST['course_id']
+    section_id = request.POST.get('section_id')
+    section_title = request.POST['section_title']
+    course_id = request.POST['course_id']
 
-	defaults = {'title': section_title, 'course_id': course_id}
-	section, created = Section.objects.update_or_create(id =section_id , defaults = defaults)
+    defaults = {'title': section_title, 'course_id': course_id}
+    section, created = Section.objects.update_or_create(id=section_id, defaults=defaults)
 
-	return redirect(create_section,course_id=course_id, section_id= section.id)
+    return redirect(create_section, course_id=course_id, section_id=section.id)
+
 
 def delete_course(request, course_id):
     image_key = S3ObjectsFormatters.course_image(course_id)
