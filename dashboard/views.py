@@ -120,7 +120,6 @@ def create_or_update_section(request):
 
 
 def delete_course(request, course_id):
-    image_key = S3ObjectsFormatters.course_image(course_id)
-    S3Manager().delete(settings.COURSES_IMAGES_BUCKET, image_key)
+    S3Manager().delete(settings.COURSES_IMAGES_BUCKET, Course.objects.get(id=course_id).image_key)
     Course.objects.get(id=course_id).delete()
     return redirect('show-courses')

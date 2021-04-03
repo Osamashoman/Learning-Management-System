@@ -59,6 +59,62 @@
               href="/static/luma/public/css/select2.css"
               rel="stylesheet">
 
+<!-- Modal -->
+<div  id="myModal" tabindex="-1"  role="dialog" aria-labelledby="exampleModalCenterTitle" class="mymodal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Course</h5>
+
+<!--          <span aria-hidden="true">&times;</span>-->
+                   <span id="close_icon" class="close">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5> You will <strong style="color: red"> <del>DELETE</del> </strong>  the course are you sure </h5>
+      </div>
+      <div class="modal-footer ">
+        <button id="cancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-accent ">
+            <a href="{% url 'delete-course' course_id=course.id %}"
+               class="text-danger " ><strong style="color:white">Delete Course</strong>
+            </a>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <style>
+
+            .mymodal {
+                      display: none; /* Hidden by default */
+                      position: fixed; /* Stay in place */
+                      z-index: 1; /* Sit on top */
+                      left: 0;
+                      top: 0;
+                      width: 100%; /* Full width */
+                      height: 100%; /* Full height */
+                      overflow: auto; /* Enable scroll if needed */
+                      background-color: rgb(0,0,0); /* Fallback color */
+                      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                    }
+            .close {
+                      color: #aaaaaa;
+                      float: right;
+                      font-size: 28px;
+                      font-weight: bold;
+                    }
+
+                    .close:hover,
+                    .close:focus {
+                      color: #000;
+                      text-decoration: none;
+                      cursor: pointer;
+                    }
+
+
+        </style>
     </head>
 
     <body class="layout-sticky-subnav layout-default ">
@@ -568,9 +624,14 @@ ss
 <!--                                               href="#"><strong>Save Draft</strong></a>-->
 <!--                                            <i class="material-icons text-muted">check</i>-->
 <!--                                        </div>-->
-                                        <div class="list-group-item">
-                                            <a href="{% url 'delete-course' course_id=course.id %}"
-                                               class="text-danger"><strong>Delete Course</strong></a>
+                                        <div class="list-group-item" style="text-align: center!important;">
+
+                                                                                <!-- Button trigger modal -->
+
+                                    <a ID="deleteButton" style="pointer-events:auto" href="#"
+                                       class="text-danger "><strong>Delete Course</strong></a>
+
+
 
                                         </div>
                                     </div>
@@ -1599,6 +1660,7 @@ ss
         <!-- Select2 -->
         <script src="/static/luma/public/vendor/select2/select2.min.js"></script>
         <script src="/static/luma/public/js/select2.js"></script>
+        <script src="/static/luma/public/js/delete_modal.js"></script>
 
     </body>
 
