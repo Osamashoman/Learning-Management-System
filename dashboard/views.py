@@ -90,7 +90,9 @@ def course_view(request, course_id=None):
         course_duraion += l.duration
     course_time = time.gmtime(course_duraion)
 
-    context = {"course": course,
+    context = {"lessons":lessons,
+                "course_id":course_id,
+                "course": course,
                'vimeo_id': vimeo_video_id.group(2),
                "lessons_count": lessons_count,
                "course_duraion": course_duraion,
@@ -123,3 +125,9 @@ def delete_course(request, course_id):
     S3Manager().delete(settings.COURSES_IMAGES_BUCKET, Course.objects.get(id=course_id).image_key)
     Course.objects.get(id=course_id).delete()
     return redirect('show-courses')
+
+def delete_lesson(request,lesson_id ):
+    lesson=Lesson.objects.get(id=lesson_id)
+    section= Section.objects.get(id=lesson.section_id)
+    Lesson.objects.get(id=lesson_id).delete()
+    return redirect('view_course',section.course_id)
