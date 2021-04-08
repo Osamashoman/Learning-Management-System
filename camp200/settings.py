@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.contrib.sites import requests
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -31,13 +33,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'classroom',
     'dashboard',
-    'catalogue',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'catalogue',
+
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,6 @@ WSGI_APPLICATION = 'camp200.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
 
 DATABASES = {
     'default': {
@@ -141,3 +143,12 @@ VIMEO_CLIENT_ID = "e46be3a6476f77ced4f52fe308aca606b0a103cc"
 VIMEO_TOKEN = "4095fd2d54a0240ab70a231c3fdd2a43"
 
 VIMEO_CLIENT_SECRETS = "N5w4mxnwZqvLV9V1CpCCKctx0z/HeCK0aJS3K2rrjPDV291GKdrv1Pmh2HmDnz8pH1HjqQdEcu2uEuSXnm52f+M5B2Wd0TM0Opq0i4rIJ2rGF+k2rF6mJpG8IbHaxtsH"
+AUTH_USER_MODEL = 'catalogue.MyUser'
+
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_PASSWORD = '6de29c07f3c82f4ba5b7dafb688fe587-e687bab4-20724bd4'
+EMAIL_HOST_USER = 'postmaster@sandboxe666f45a71ed4779b861bfdb093f6e7e.mailgun.org'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
