@@ -230,17 +230,27 @@ DESIGN COURSES
 
                         <ul class="nav navbar-nav ml-auto mr-0">
                             <li class="nav-item">
-                                <a href="login.html"
+                                <a href="/signin/"
                                    class="nav-link"
                                    data-toggle="tooltip"
                                    data-title="Login"
                                    data-placement="bottom"
                                    data-boundary="window"><i class="material-icons">lock_open</i></a>
                             </li>
+                            {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a href="signup.html"
+                                <a class="btn btn-outline-white">Welcom {{user.first_name}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/signout/"
+                                   class="btn btn-outline-white">Sign out </a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a href="/signup/"
                                    class="btn btn-outline-white">Get Started</a>
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
 
