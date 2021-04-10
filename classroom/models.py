@@ -1,3 +1,5 @@
+import time
+
 from django.db import models
 
 
@@ -21,3 +23,8 @@ class Lesson(models.Model):
 	type = models.CharField(max_length=200)
 	link = models.CharField(max_length=200)
 	duration = models.IntegerField(null=True)
+	free_sample = models.BooleanField(default=False)
+
+	@property
+	def duration_gmtime_object(self):
+		return time.gmtime(self.duration)
