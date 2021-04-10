@@ -15,5 +15,7 @@ urlpatterns = [
     path('section/<int:course_id>/<int:section_id>/', views.create_section, name='create-section'),
     path('section/<int:course_id>/', views.create_section, name='create-section'),
     path('section/create_or_update_section/', views.create_or_update_section, name='create_or_update_section'),
+    path('section/delete/<int:section_id>/', views.delete_section, name='delete-section'),
+
 
 ]

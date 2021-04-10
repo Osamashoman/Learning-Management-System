@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.core.mail.backends import smtp
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -141,3 +143,15 @@ VIMEO_CLIENT_ID = "e46be3a6476f77ced4f52fe308aca606b0a103cc"
 VIMEO_TOKEN = "4095fd2d54a0240ab70a231c3fdd2a43"
 
 VIMEO_CLIENT_SECRETS = "N5w4mxnwZqvLV9V1CpCCKctx0z/HeCK0aJS3K2rrjPDV291GKdrv1Pmh2HmDnz8pH1HjqQdEcu2uEuSXnm52f+M5B2Wd0TM0Opq0i4rIJ2rGF+k2rF6mJpG8IbHaxtsH"
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST='smtp.mailgun.org'
+EMAIL_PORT=587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER="postmaster@sandbox82d35ec049f24503bf9fd486286def77.mailgun.org"
+EMAIL_HOST_PASSWORD='64fa524b455b5e14dc476105935cbce8-e687bab4-814fe27d'
