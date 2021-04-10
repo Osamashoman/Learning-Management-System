@@ -105,7 +105,7 @@ def create_section(request, course_id=None, section_id=None):
         context = {'course_id': course_id, 'section_id': section_id}
     if section_id:
         context['section'] = Section.objects.get(id=section_id)
-    return render(request, "luma\Demos\Fixed_Layout\instructor-add-section.html", context=context)
+    return render(request, "luma/Demos/Fixed_Layout/instructor-add-section.html", context=context)
 
 
 def create_or_update_section(request):
