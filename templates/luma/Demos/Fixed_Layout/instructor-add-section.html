@@ -368,23 +368,23 @@
                         <div class="flex d-flex flex-column flex-sm-row align-items-center">
 
                             <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                                {% if course_id %}
-                                <h2 class="mb-0">Uptate Course</h2>
+                                {% if section_id %}
+                                <h2 class="mb-0">Uptate Section</h2>
                                 {% else %}
-                                <h2 class="mb-0">Create Course</h2>
+                                    <h2 class="mb-0">Create Section</h2>
                                 {% endif %}
                                 <ol class="breadcrumb p-0 m-0">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    {% if course %}
+                                    {% if section %}
                                     <li class="breadcrumb-item active">
 
-                                        update Course
+                                        Update Section
 
                                     </li>
                                     {% else %}
                                      <li class="breadcrumb-item active">
 
-                                        create Course
+                                        Create Section
 
                                     </li>
                                     {% endif %}

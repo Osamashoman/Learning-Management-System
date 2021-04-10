@@ -2,6 +2,7 @@ import re
 import time
 
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
@@ -80,21 +81,29 @@ def course_form(request, course_id=None):
 def course_view(request, course_id=None):
     # Show course View
     # Get course from database
+
     course = Course.objects.get(id=course_id)
     vimeo_video_id = re.search('(\/)(\d+$)', course.promo_video)
     lessons = Lesson.objects.filter(section__course_id=course_id)
     lessons_count = Lesson.objects.filter(section__course_id=course_id).count()
+    section=Section.objects.filter(course_id=course_id)
+
+
+
 
     course_duraion = 0
     for l in lessons:
         course_duraion += l.duration
     course_time = time.gmtime(course_duraion)
 
-    context = {"course": course,
+    context = {"sections":section,
+                "course_id":course_id,
+                "course": course,
                'vimeo_id': vimeo_video_id.group(2),
                "lessons_count": lessons_count,
                "course_duraion": course_duraion,
-               "course_time": course_time
+               "course_time": course_time,
+
                }
     return render(request, 'luma/Demos/Fixed_Layout/dashboard-show-course.html', context)
 
@@ -116,10 +125,25 @@ def create_or_update_section(request):
     defaults = {'title': section_title, 'course_id': course_id}
     section, created = Section.objects.update_or_create(id=section_id, defaults=defaults)
 
-    return redirect(create_section, course_id=course_id, section_id=section.id)
+    return redirect(course_view, course_id=course_id)
 
 
 def delete_course(request, course_id):
     S3Manager().delete(settings.COURSES_IMAGES_BUCKET, Course.objects.get(id=course_id).image_key)
     Course.objects.get(id=course_id).delete()
     return redirect('show-courses')
+
+def delete_lesson(request,lesson_id ):
+    lesson=Lesson.objects.get(id=lesson_id)
+    section= Section.objects.get(id=lesson.section_id)
+    lesson.delete()
+    return redirect('view_course',section.course_id)
+
+
+
+def delete_section(request, section_id ):
+    section=Section.objects.get(id=section_id)
+    section.delete()
+    return redirect(course_view, section.course_id)
+
+
