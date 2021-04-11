@@ -396,7 +396,7 @@ DESIGN COURSES
                                  data-partial-height="44"
                                  data-toggle="popover"
                                  data-trigger="click">
-                                <a href="{% url 'update-course-form' course_id=c.id %}"
+                                <a href="{% url 'view_course' course_id=c.id %}"
                                    class="js-image"
                                    data-position="">
                                     <img  src="https://{{BUCKET}}.s3.amazonaws.com/{{c.image_key}}"

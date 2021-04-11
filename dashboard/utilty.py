@@ -58,3 +58,4 @@ class S3ObjectsFormatters:
     @staticmethod
     def course_image(course_id):
         return f'{course_id}.jpg'
+
