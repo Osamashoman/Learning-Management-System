@@ -13,20 +13,18 @@ def index(request):
 
 
 def sections_in_course(request, course_id):
-
     sections = Section.objects.filter(course_id=course_id)
     course = Course.objects.get(id=course_id)
     courses = Course.objects.all()
 
-    vimeo_video_id=VimeoManager.get_id_from_url(None,course.promo_video)
+    vimeo_video_id = VimeoManager.get_id_from_url(None, course.promo_video)
     lessonssum = sum(list(Lesson.objects.all().values_list('duration', flat=True)))
 
     context = {'sections': sections,
                'course': course,
                'lessonssum': time.gmtime(lessonssum),
                'vimeo_video_id': vimeo_video_id,
-               'courses':courses,
-
+               'courses': courses,
 
                }
     return render(request, 'luma/Demos/Fixed_Layout/student-course.html', context)
@@ -81,7 +79,7 @@ def reset_password(request):
 
 def change_password_form(request, user_id):
     context = {'user_id': user_id}
-    return render(request, 'luma/Demos/Fixed_Layout/change-password.html' ,context)
+    return render(request, 'luma/Demos/Fixed_Layout/change-password.html', context)
 
 
 def change_password(request):
@@ -91,3 +89,15 @@ def change_password(request):
     user.set_password(password)
     user.save()
     return redirect(sign_in)
+
+
+def edit_account(request):
+    if request.method == 'POST':
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        user = request.user
+        user.first_name = firstname
+        user.last_name = lastname
+        user.save()
+
+    return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
