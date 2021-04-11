@@ -1,9 +1,13 @@
+
+from catalogue.models import MyUser, StudentProfile
+
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.mail import send_mail
 from catalogue.models import MyUser
 from django.shortcuts import render, redirect
 from classroom.models import *
 from dashboard.utilty import VimeoManager
+
 
 
 def index(request):
@@ -79,7 +83,7 @@ def reset_password(request):
 
 def change_password_form(request, user_id):
     context = {'user_id': user_id}
-    return render(request, 'luma/Demos/Fixed_Layout/change-password.html', context)
+    return render(request, 'luma/Demos/Fixed_Layout/change-password.html' ,context)
 
 
 def change_password(request):
@@ -101,3 +105,21 @@ def edit_account(request):
         user.save()
 
     return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
+
+def buy_course(request,course_id):
+
+    user_id=StudentProfile.objects.get(user_id=request.user.id)
+    course=Course.objects.get(id=course_id)
+    user_id.courses.add(course)
+    return redirect(sections_in_course ,course_id=course_id)
+
+def confirm_buy(request,course_id):
+
+    course = Course.objects.get(id=course_id)
+
+    context = {'price':course.price,
+               'title':course.title,
+               'course_id':course_id
+
+    }
+    return render(request, 'luma/Demos/Fixed_Layout/course enroll.html', context )

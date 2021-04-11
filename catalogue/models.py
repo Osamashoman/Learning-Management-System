@@ -1,6 +1,8 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 
+from classroom.models import Course
+
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
@@ -33,6 +35,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email address',
@@ -44,7 +47,6 @@ class MyUser(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -67,3 +69,8 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+class StudentProfile(models.Model):
+     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+     courses=models.ManyToManyField(Course)
+
