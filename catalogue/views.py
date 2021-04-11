@@ -119,3 +119,6 @@ def confirm_buy(request,course_id):
     context = {'price':course.price,
                'title':course.title,
                'course_id':course_id
+
+    }
+    return render(request, 'luma/Demos/Fixed_Layout/course enroll.html', context )
