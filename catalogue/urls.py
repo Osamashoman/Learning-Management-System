@@ -4,7 +4,7 @@ from catalogue import views
 
 urlpatterns = [
     path("", views.index),
-    path("course_catalogue/<int:course_id>/", views.sections_in_course, name="sections-in-course"),
+    path("course_catalogue/<int:course_id>/", views.course, name="course"),
     path('signup/', views.sign_up, name='sign_up'),
     path('signin/', views.sign_in),
     path('signout/', views.sign_out),

@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
 
-def sections_in_course(request, course_id):
+def course(request, course_id):
     sections = Section.objects.filter(course_id=course_id)
     course = Course.objects.get(id=course_id)
     courses = Course.objects.all()
