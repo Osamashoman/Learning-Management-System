@@ -1,8 +1,7 @@
-import re
-import time
-
-from classroom.models import Lesson
-from django.shortcuts import render
+from django.contrib.auth import get_user_model, login, authenticate, logout
+from django.core.mail import send_mail
+from catalogue.models import MyUser
+from django.shortcuts import render, redirect
 from classroom.models import *
 from dashboard.utilty import VimeoManager
 
@@ -17,6 +16,7 @@ def sections_in_course(request, course_id):
 
     sections = Section.objects.filter(course_id=course_id)
     course = Course.objects.get(id=course_id)
+    courses = Course.objects.all()
 
     vimeo_video_id=VimeoManager.get_id_from_url(None,course.promo_video)
     lessonssum = sum(list(Lesson.objects.all().values_list('duration', flat=True)))
@@ -25,6 +25,7 @@ def sections_in_course(request, course_id):
                'course': course,
                'lessonssum': time.gmtime(lessonssum),
                'vimeo_video_id': vimeo_video_id,
+               'courses':courses,
 
 
                }
