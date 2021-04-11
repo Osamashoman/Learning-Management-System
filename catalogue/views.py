@@ -1,13 +1,14 @@
 
-from django.core.mail import send_mail
-
-from django.shortcuts import render, redirect
-
-import time
 from catalogue.models import MyUser, StudentProfile
-from classroom.models import Course, Section ,Lesson
-from django.contrib.auth import authenticate, login, get_user_model, logout
+
+from django.contrib.auth import get_user_model, login, authenticate, logout
+from django.core.mail import send_mail
+from catalogue.models import MyUser
+from django.shortcuts import render, redirect
+from classroom.models import *
 from dashboard.utilty import VimeoManager
+
+
 
 def index(request):
     c = Course.objects.all()
@@ -42,8 +43,6 @@ def sign_up(request):
         password = request.POST['password']
         User = get_user_model()
         user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, password=password)
-        StudentProfile.objects.create(user=user)
-
         login(request, user)
         return redirect(index)
     else:
@@ -95,6 +94,17 @@ def change_password(request):
     user.save()
     return redirect(sign_in)
 
+def edit_account(request):
+    if request.method == 'POST':
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        user = request.user
+        user.first_name = firstname
+        user.last_name = lastname
+        user.save()
+
+    return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
+
 def buy_course(request,course_id):
 
     user_id=StudentProfile.objects.get(user_id=request.user.id)
@@ -109,6 +119,3 @@ def confirm_buy(request,course_id):
     context = {'price':course.price,
                'title':course.title,
                'course_id':course_id
-
-    }
-    return render(request, 'luma/Demos/Fixed_Layout/course enroll.html', context )
