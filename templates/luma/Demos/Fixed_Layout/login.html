@@ -249,10 +249,11 @@
                 <div class="pt-32pt pt-sm-64pt pb-32pt">
                     <div class="container page__container">
 
+
+                            {% if error == True %}
                         <form action="/signin/" method="post"
                               class="col-md-5 p-0 mx-auto">
                             {% csrf_token %}
-                            {% if error == True %}
                             <div class="alert alert-accent"
                               role="alert">
                                 <div class="d-flex flex-wrap align-items-start">
@@ -267,7 +268,36 @@
                                         </div>
                                 </div>
                         </div>
+                            <div class="form-group">
+                                <label class="form-label"
+                                       for="email">Email:</label>
+                                <input id="email"
+                                       type="email"
+                                       class="form-control"
+                                       placeholder="Your email address ..."
+                                       name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"
+                                       for="password">Password:</label>
+                                <input id="password"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="Your password"
+                                       name="password" required>
+                                <p class="text-right"><a href="/reset_password/"
+                                       class="small">Forgot your password?</a></p>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-primary">Login</button>
+                            </div>
+                        </form>
                             {% else %}
+                            <form action="/signin/" method="post"
+                              class="col-md-5 p-0 mx-auto">
+                            {% csrf_token %}
+
                             <div class="form-group">
                                 <label class="form-label"
                                        for="email">Email:</label>
