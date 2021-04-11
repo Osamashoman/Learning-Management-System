@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{%load static%}
 <html lang="en"
       dir="ltr">
 
@@ -9,7 +8,7 @@
               content="IE=edge">
         <meta name="viewport"
               content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Account</title>
+        <title>Sign Up</title>
 
         <!-- Prevent the demo from appearing in search engines -->
         <meta name="robots"
@@ -20,32 +19,32 @@
 
         <!-- Preloader -->
         <link type="text/css"
-              href="{%static 'luma/public/vendor/spinkit.css'%}"
+              href="/static/luma/public/vendor/spinkit.css"
               rel="stylesheet">
 
         <!-- Perfect Scrollbar -->
         <link type="text/css"
-              href="{%static 'luma/public/vendor/perfect-scrollbar.css'%}"
+              href="/static/luma/public/vendor/perfect-scrollbar.css"
               rel="stylesheet">
 
         <!-- Material Design Icons -->
         <link type="text/css"
-              href="{%static 'luma/public/css/material-icons.css'%}"
+              href="/static/luma/public/css/material-icons.css"
               rel="stylesheet">
 
         <!-- Font Awesome Icons -->
         <link type="text/css"
-              href="{%static 'luma/public/css/fontawesome.css'%}"
+              href="/static/luma/public/css/fontawesome.css"
               rel="stylesheet">
 
         <!-- Preloader -->
         <link type="text/css"
-              href="{%static 'luma/public/css/preloader.css'%}"
+              href="/static/luma/public/css/preloader.css"
               rel="stylesheet">
 
         <!-- App CSS -->
         <link type="text/css"
-              href="{%static 'luma/public/css/app.css'%}"
+              href="/static/luma/public/css/app.css"
               rel="stylesheet">
 
     </head>
@@ -81,30 +80,25 @@
                  data-effects="">
                 <div class="mdk-header__content">
 
-                    <!-- Navbar -->
-
-                    <div class="navbar navbar-expand pr-0 navbar-dark-pickled-bluewood navbar-shadow"
+                    <div class="navbar navbar-expand navbar-dark-pickled-bluewood navbar-shadow"
                          id="default-navbar"
                          data-primary>
 
-                        <!-- Navbar Toggler -->
-
+                        <!-- Navbar toggler -->
                         <button class="navbar-toggler w-auto mr-16pt d-block rounded-0"
                                 type="button"
                                 data-toggle="sidebar">
                             <span class="material-icons">short_text</span>
                         </button>
 
-                        <!-- // END Navbar Toggler -->
-
                         <!-- Navbar Brand -->
-
                         <a href="index.html"
                            class="navbar-brand mr-16pt">
+                            <!-- <img class="navbar-brand-icon" src="/static/luma/public/images/logo/white-100@2x.png" width="30" alt="Luma"> -->
 
                             <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-                                <span class="avatar-title rounded bg-primary"><img src="{%static 'luma/public/images/illustration/student/128/white.svg"
+                                <span class="avatar-title rounded bg-primary"><img src="/static/luma/public/images/illustration/student/128/white.svg"
                                          alt="logo"
                                          class="img-fluid" /></span>
 
@@ -113,234 +107,136 @@
                             <span class="d-none d-lg-block">Luma</span>
                         </a>
 
-                        <!-- // END Navbar Brand -->
-
-                        <span class="d-none d-md-flex align-items-center mr-16pt">
-
-                            <span class="avatar avatar-sm mr-12pt">
-
-                                <span class="avatar-title rounded navbar-avatar"><i class="material-icons">trending_up</i></span>
-
-                            </span>
-
-                            <small class="flex d-flex flex-column">
-                                <strong class="navbar-text-100">Earnings</strong>
-                                <span class="navbar-text-50">&dollar;12.3k</span>
-                            </small>
-                        </span>
-                        <span class="d-none d-md-flex align-items-center mr-16pt">
-
-                            <span class="avatar avatar-sm mr-12pt">
-
-                                <span class="avatar-title rounded navbar-avatar"><i class="material-icons">receipt</i></span>
-
-                            </span>
-
-                            <small class="flex d-flex flex-column">
-                                <strong class="navbar-text-100">Sales</strong>
-                                <span class="navbar-text-50">264</span>
-                            </small>
-                        </span>
-
-                        <!-- Navbar Search -->
-
-                        <form class="search-form navbar-search d-none d-md-flex mr-16pt"
-                              action="index.html">
-                            <button class="btn"
-                                    type="submit"><i class="material-icons">search</i></button>
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Search ...">
-                        </form>
-
-                        <!-- // END Navbar Search -->
-
-                        <div class="flex"></div>
-
-                        <!-- Navbar Menu -->
-
-                        <div class="nav navbar-nav flex-nowrap d-flex mr-16pt">
-
-                            <!-- Notifications dropdown -->
-                            <div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full"
-                                 data-toggle="tooltip"
-                                 data-title="Messages"
-                                 data-placement="bottom"
-                                 data-boundary="window">
-                                <button class="nav-link btn-flush dropdown-toggle"
-                                        type="button"
-                                        data-toggle="dropdown"
-                                        data-caret="false">
-                                    <i class="material-icons icon-24pt">mail_outline</i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div data-perfect-scrollbar
-                                         class="position-relative">
-                                        <div class="dropdown-header"><strong>Messages</strong></div>
-                                        <div class="list-group list-group-flush mb-0">
-
-                                            <a href="javascript:void(0);"
-                                               class="list-group-item list-group-item-action unread">
-                                                <span class="d-flex align-items-center mb-1">
-                                                    <small class="text-black-50">5 minutes ago</small>
-
-                                                    <span class="ml-auto unread-indicator bg-accent"></span>
-
-                                                </span>
-                                                <span class="d-flex">
-                                                    <span class="avatar avatar-xs mr-2">
-                                                        <img src="{%static 'luma/public/images/people/110/woman-5.jpg"
-                                                             alt="people"
-                                                             class="avatar-img rounded-circle">
-                                                    </span>
-                                                    <span class="flex d-flex flex-column">
-                                                        <strong class="text-black-100">Michelle</strong>
-                                                        <span class="text-black-70">Clients loved the new design.</span>
-                                                    </span>
-                                                </span>
-                                            </a>
-
-                                            <a href="javascript:void(0);"
-                                               class="list-group-item list-group-item-action">
-                                                <span class="d-flex align-items-center mb-1">
-                                                    <small class="text-black-50">5 minutes ago</small>
-
-                                                </span>
-                                                <span class="d-flex">
-                                                    <span class="avatar avatar-xs mr-2">
-                                                        <img src="{%static 'luma/public/images/people/110/woman-5.jpg"
-                                                             alt="people"
-                                                             class="avatar-img rounded-circle">
-                                                    </span>
-                                                    <span class="flex d-flex flex-column">
-                                                        <strong class="text-black-100">Michelle</strong>
-                                                        <span class="text-black-70">🔥 Superb job..</span>
-                                                    </span>
-                                                </span>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- // END Notifications dropdown -->
-
-                            <!-- Notifications dropdown -->
-                            <div class="nav-item ml-16pt dropdown dropdown-notifications dropdown-xs-down-full"
-                                 data-toggle="tooltip"
-                                 data-title="Notifications"
-                                 data-placement="bottom"
-                                 data-boundary="window">
-                                <button class="nav-link btn-flush dropdown-toggle"
-                                        type="button"
-                                        data-toggle="dropdown"
-                                        data-caret="false">
-                                    <i class="material-icons">notifications_none</i>
-                                    <span class="badge badge-notifications badge-accent">2</span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div data-perfect-scrollbar
-                                         class="position-relative">
-                                        <div class="dropdown-header"><strong>System notifications</strong></div>
-                                        <div class="list-group list-group-flush mb-0">
-
-                                            <a href="javascript:void(0);"
-                                               class="list-group-item list-group-item-action unread">
-                                                <span class="d-flex align-items-center mb-1">
-                                                    <small class="text-black-50">3 minutes ago</small>
-
-                                                    <span class="ml-auto unread-indicator bg-accent"></span>
-
-                                                </span>
-                                                <span class="d-flex">
-                                                    <span class="avatar avatar-xs mr-2">
-                                                        <span class="avatar-title rounded-circle bg-light">
-                                                            <i class="material-icons font-size-16pt text-accent">account_circle</i>
-                                                        </span>
-                                                    </span>
-                                                    <span class="flex d-flex flex-column">
-
-                                                        <span class="text-black-70">Your profile information has not been synced correctly.</span>
-                                                    </span>
-                                                </span>
-                                            </a>
-
-                                            <a href="javascript:void(0);"
-                                               class="list-group-item list-group-item-action">
-                                                <span class="d-flex align-items-center mb-1">
-                                                    <small class="text-black-50">5 hours ago</small>
-
-                                                </span>
-                                                <span class="d-flex">
-                                                    <span class="avatar avatar-xs mr-2">
-                                                        <span class="avatar-title rounded-circle bg-light">
-                                                            <i class="material-icons font-size-16pt text-primary">group_add</i>
-                                                        </span>
-                                                    </span>
-                                                    <span class="flex d-flex flex-column">
-                                                        <strong class="text-black-100">Adrian. D</strong>
-                                                        <span class="text-black-70">Wants to join your private group.</span>
-                                                    </span>
-                                                </span>
-                                            </a>
-
-                                            <a href="javascript:void(0);"
-                                               class="list-group-item list-group-item-action">
-                                                <span class="d-flex align-items-center mb-1">
-                                                    <small class="text-black-50">1 day ago</small>
-
-                                                </span>
-                                                <span class="d-flex">
-                                                    <span class="avatar avatar-xs mr-2">
-                                                        <span class="avatar-title rounded-circle bg-light">
-                                                            <i class="material-icons font-size-16pt text-warning">storage</i>
-                                                        </span>
-                                                    </span>
-                                                    <span class="flex d-flex flex-column">
-
-                                                        <span class="text-black-70">Your deploy was successful.</span>
-                                                    </span>
-                                                </span>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- // END Notifications dropdown -->
-
-                            <div class="nav-item dropdown">
+                        <ul class="nav navbar-nav d-none d-sm-flex flex justify-content-start ml-8pt">
+                            <li class="nav-item">
+                                <a href="index.html"
+                                   class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
                                 <a href="#"
-                                   class="nav-link d-flex align-items-center dropdown-toggle"
+                                   class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   data-caret="false">Courses</a>
+                                <div class="dropdown-menu">
+                                    <a href="courses.html"
+                                       class="dropdown-item">Browse Courses</a>
+                                    <a href="student-course.html"
+                                       class="dropdown-item">Preview Course</a>
+                                    <a href="student-lesson.html"
+                                       class="dropdown-item">Preview Lesson</a>
+                                    <a href="student-take-course.html"
+                                       class="dropdown-item"><span class="mr-16pt">Take Course</span> <span class="badge badge-notifications badge-accent text-uppercase ml-auto">Pro</span></a>
+                                    <a href="student-take-lesson.html"
+                                       class="dropdown-item">Take Lesson</a>
+                                    <a href="student-take-quiz.html"
+                                       class="dropdown-item">Take Quiz</a>
+                                    <a href="student-quiz-result-details.html"
+                                       class="dropdown-item">Quiz Result</a>
+                                    <a href="student-dashboard.html"
+                                       class="dropdown-item">Student Dashboard</a>
+                                    <a href="student-my-courses.html"
+                                       class="dropdown-item">My Courses</a>
+                                    <a href="student-quiz-results.html"
+                                       class="dropdown-item">My Quizzes</a>
+                                    <a href="help-center.html"
+                                       class="dropdown-item">Help Center</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   data-caret="false">Paths</a>
+                                <div class="dropdown-menu">
+                                    <a href="paths.html"
+                                       class="dropdown-item">Browse Paths</a>
+                                    <a href="student-path.html"
+                                       class="dropdown-item">Path Details</a>
+                                    <a href="student-path-assessment.html"
+                                       class="dropdown-item">Skill Assessment</a>
+                                    <a href="student-path-assessment-result.html"
+                                       class="dropdown-item">Skill Result</a>
+                                    <a href="student-paths.html"
+                                       class="dropdown-item">My Paths</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="pricing.html"
+                                   class="nav-link">Pricing</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   data-caret="false">Teachers</a>
+                                <div class="dropdown-menu">
+                                    <a href="instructor-dashboard.html"
+                                       class="dropdown-item">Instructor Dashboard</a>
+                                    <a href="instructor-courses.html"
+                                       class="dropdown-item">Manage Courses</a>
+                                    <a href="instructor-quizzes.html"
+                                       class="dropdown-item">Manage Quizzes</a>
+                                    <a href="instructor-earnings.html"
+                                       class="dropdown-item">Earnings</a>
+                                    <a href="instructor-statement.html"
+                                       class="dropdown-item">Statement</a>
+                                    <a href="instructor-edit-course.html"
+                                       class="dropdown-item">Edit Course</a>
+                                    <a href="instructor-edit-quiz.html"
+                                       class="dropdown-item">Edit Quiz</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown"
+                                data-toggle="tooltip"
+                                data-title="Community"
+                                data-placement="bottom"
+                                data-boundary="window">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
                                    data-toggle="dropdown"
                                    data-caret="false">
-
-                                    <span class="avatar avatar-sm mr-8pt2">
-
-                                        <span class="avatar-title rounded-circle bg-primary"><i class="material-icons">account_box</i></span>
-
-                                    </span>
-
+                                    <i class="material-icons">people_outline</i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-header"><strong>Account</strong></div>
-                                    <a class="dropdown-item active"
-                                       href="edit-account.html">Edit Account</a>
-                                    <a class="dropdown-item"
-                                       href="billing.html">Billing</a>
-                                    <a class="dropdown-item"
-                                       href="billing-history.html">Payments</a>
-                                    <a class="dropdown-item"
-                                       href="login.html">Logout</a>
+                                <div class="dropdown-menu">
+                                    <a href="teachers.html"
+                                       class="dropdown-item">Browse Teachers</a>
+                                    <a href="student-profile.html"
+                                       class="dropdown-item">Student Profile</a>
+                                    <a href="teacher-profile.html"
+                                       class="dropdown-item">Instructor Profile</a>
+                                    <a href="blog.html"
+                                       class="dropdown-item">Blog</a>
+                                    <a href="blog-post.html"
+                                       class="dropdown-item">Blog Post</a>
+                                    <a href="faq.html"
+                                       class="dropdown-item">FAQ</a>
+                                    <a href="help-center.html"
+                                       class="dropdown-item">Help Center</a>
+                                    <a href="discussions.html"
+                                       class="dropdown-item">Discussions</a>
+                                    <a href="discussion.html"
+                                       class="dropdown-item">Discussion Details</a>
+                                    <a href="discussions-ask.html"
+                                       class="dropdown-item">Ask Question</a>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
 
-                        <!-- // END Navbar Menu -->
-
+                        <ul class="nav navbar-nav ml-auto mr-0">
+                            <li class="nav-item">
+                                <a href="login.html"
+                                   class="nav-link"
+                                   data-toggle="tooltip"
+                                   data-title="Login"
+                                   data-placement="bottom"
+                                   data-boundary="window"><i class="material-icons">lock_open</i></a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="signup.html"
+                                   class="btn btn-outline-white">Get Started</a>
+                            </li>
+                        </ul>
                     </div>
-
-                    <!-- // END Navbar -->
 
                 </div>
             </div>
@@ -350,74 +246,141 @@
             <!-- Header Layout Content -->
             <div class="mdk-header-layout__content page-content ">
 
-                <div class="pt-32pt">
-                    <div class="container page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
-                        <div class="flex d-flex flex-column flex-sm-row align-items-center">
+<!--                <div class="py-32pt navbar-submenu">-->
+<!--                    <div class="container page__container">-->
+<!--                        <div class="progression-bar progression-bar&#45;&#45;active-accent">-->
+<!--                            <a href="pricing.html"-->
+<!--                               class="progression-bar__item progression-bar__item&#45;&#45;complete">-->
+<!--                                <span class="progression-bar__item-content">-->
+<!--                                    <i class="material-icons progression-bar__item-icon">done</i>-->
+<!--                                    <span class="progression-bar__item-text h5 mb-0 text-uppercase">Pricing</span>-->
+<!--                                </span>-->
+<!--                            </a>-->
+<!--                            <a href="signup.html"-->
+<!--                               class="progression-bar__item progression-bar__item&#45;&#45;complete progression-bar__item&#45;&#45;active">-->
+<!--                                <span class="progression-bar__item-content">-->
+<!--                                    <i class="material-icons progression-bar__item-icon"></i>-->
+<!--                                    <span class="progression-bar__item-text h5 mb-0 text-uppercase">Account details</span>-->
+<!--                                </span>-->
+<!--                            </a>-->
+<!--                            <a href="signup-payment.html"-->
+<!--                               class="progression-bar__item">-->
+<!--                                <span class="progression-bar__item-content">-->
+<!--                                    <i class="material-icons progression-bar__item-icon"></i>-->
+<!--                                    <span class="progression-bar__item-text h5 mb-0 text-uppercase">Payment details</span>-->
+<!--                                </span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                            <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                                <h2 class="mb-0">Account</h2>
+                <div class="page-section container page__container">
+                    <div class="col-lg-10 p-0 mx-auto">
+                        <div class="row">
+                            <div class="col-md-3 mb-24pt mb-md-0">
+<!--                                <form action="/signup/" method="post">-->
+<!--                                    {% csrf_token %}-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="form-label"-->
+<!--                                               for="name">First name:</label>-->
+<!--                                        <input id="name1"-->
+<!--                                               type="text"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Your first name ..."-->
+<!--                                                name="firstname">-->
+<!--                                    </div>-->
+<!--                                     <div class="form-group">-->
+<!--                                        <label class="form-label"-->
+<!--                                               for="name">Last name:</label>-->
+<!--                                        <input id="name"-->
+<!--                                               type="text"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Your last name ..."-->
+<!--                                                name="lastname">-->
+<!--                                     </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="form-label"-->
+<!--                                               for="email">Your email:</label>-->
+<!--                                        <input id="email"-->
+<!--                                               type="email"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Your email address ..."-->
+<!--                                                name="email">-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group mb-24pt">-->
+<!--                                        <label class="form-label"-->
+<!--                                               for="password">Password:</label>-->
+<!--                                        <input id="password"-->
+<!--                                               type="password"-->
+<!--                                               class="form-control"-->
+<!--                                               placeholder="Your password ..."-->
+<!--                                                name="password">-->
+<!--                                    </div>-->
+<!--                                    <button class="btn btn-primary">Create account</button>-->
+<!--                                </form>-->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-0">
+                                    <div class="card-body">
+                                        <h5>Purchase summary</h5>
+                                        <div class="d-flex mb-8pt">
+                                            <div class="flex"><strong class="text-70">Subscription</strong></div>
+                                            <strong>{{ title }}</strong>
+                                        </div>
 
-                                <ol class="breadcrumb p-0 m-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <div class="alert alert-soft-warning">
+                                            <div class="d-flex flex-wrap align-items-start">
+                                                <div class="mr-8pt">
+                                                    <i class="material-icons">check</i>
+                                                </div>
+                                                <div class="flex"
+                                                     style="min-width: 180px">
+                                                    <small class="text-100">
+                                                        Access for this course for lifetime
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <li class="breadcrumb-item">
+                                        <div class="d-flex mb-16pt pb-16pt border-bottom">
+                                            <div class="flex"><strong class="text-70">Price</strong></div>
+                                            <strong>{{ price }}JD</strong>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox"
+                                                   class="custom-control-input"
+                                                   checked
+                                                   id="topic-all">
+                                            <label class="custom-control-label">Terms and conditions</label>
+                                            <small class="form-text text-muted">By checking here and continuing, I agree to the Luma Terms of Use</small>
 
-                                        <a href="">Account</a>
+                                        </div>
+                                        <div style="margin: 10px; padding-left:40%  ">
+                                            <a style="text-align: center;" href="{% url 'buy-course' course_id %}"
+                                   class="btn btn-accent mb-8pt">Buy</a>
 
-                                    </li>
-
-                                    <li class="breadcrumb-item active">
-
-                                        Edit Account
-
-                                    </li>
-
-                                </ol>
-
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+<!--                <div class="page-separator justify-content-center m-0">-->
+<!--                    <div class="page-separator__text">or sign-in with</div>-->
+<!--                </div>-->
+<!--                <div class="page-section text-center">-->
+<!--                    <div class="container page__container">-->
+<!--                        <a href="signup-payment.html"-->
+<!--                           class="btn btn-secondary btn-block-xs">Facebook</a>-->
+<!--                        <a href="signup-payment.html"-->
+<!--                           class="btn btn-secondary btn-block-xs">Twitter</a>-->
+<!--                        <a href="signup-payment.html"-->
+<!--                           class="btn btn-secondary btn-block-xs">Google+</a>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="container page__container page-section">
-                    <div class="page-separator">
-                        <div class="page-separator__text">Basic Information</div>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <form method="post" action="{%url 'edit-account'%}">
-                            {%csrf_token%}
-                            <div class="form-group">
-                                <label class="form-label">First name</label>
-                                <input type="text"
-                                       class="form-control"
-                                       name="firstname"
-                                       value="{{user.first_name}}"
-                                       placeholder="Your first name ...">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Last name</label>
-                                <input type="text"
-                                       class="form-control"
-                                       name="lastname"
-                                       value="{{user.last_name}}"
-                                       placeholder="Your last name ...">
-                            </div>
-<!--                            <div class="form-group">-->
-<!--                                <label class="form-label">Email address</label>-->
-<!--                                <input type="email"-->
-<!--                                       class="form-control"-->
-<!--                                       value="alexander.watson@fake-mail.com"-->
-<!--                                       placeholder="Your email address ...">-->
-<!--                                <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>-->
-<!--                            </div>-->
-                            <button class="btn btn-primary">Save changes</button>
-                            <a class="ml-sm-auto text-underline" style=" padding-left:20px " href="{% url 'edit-password' user_id=user.id %}">Reset password</a>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
+<!--            </div>-->
             <!-- // END Header Layout Content -->
 
             <!-- Footer -->
@@ -426,7 +389,7 @@
                 <div class="container page__container page-section d-flex flex-column">
                     <p class="text-70 brand mb-24pt">
                         <img class="brand-icon"
-                             src="{%static 'luma/public/images/logo/black-70@2x.png'%}"
+                             src="/static/luma/public/images/logo/black-70@2x.png"
                              width="30"
                              alt="Luma"> Luma
                     </p>
@@ -456,13 +419,24 @@
 
                     <!-- Sidebar Content -->
 
+                    <div class="d-flex align-items-center navbar-height">
+                        <form action="index.html"
+                              class="search-form search-form--black mx-16pt pr-0 pl-16pt">
+                            <input type="text"
+                                   class="form-control pl-0"
+                                   placeholder="Search">
+                            <button class="btn"
+                                    type="submit"><i class="material-icons">search</i></button>
+                        </form>
+                    </div>
+
                     <a href="index.html"
                        class="sidebar-brand ">
-                        <!-- <img class="sidebar-brand-icon" src="{%static 'luma/public/images/illustration/student/128/white.svg" alt="Luma"> -->
+                        <!-- <img class="sidebar-brand-icon" src="/static/luma/public/images/illustration/student/128/white.svg" alt="Luma"> -->
 
                         <span class="avatar avatar-xl sidebar-brand-icon h-auto">
 
-                            <span class="avatar-title rounded bg-primary"><img src="{%static 'luma/public/images/illustration/student/128/white.svg"
+                            <span class="avatar-title rounded bg-primary"><img src="/static/luma/public/images/illustration/student/128/white.svg"
                                      class="img-fluid"
                                      alt="logo" /></span>
 
@@ -900,7 +874,7 @@
                                         <span class="sidebar-menu-text">Login</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-menu-item">
+                                <li class="sidebar-menu-item active">
                                     <a class="sidebar-menu-button"
                                        href="signup.html">
                                         <span class="sidebar-menu-text">Signup</span>
@@ -924,7 +898,7 @@
                                         <span class="sidebar-menu-text">Change Password</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-menu-item active">
+                                <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
                                        href="edit-account.html">
                                         <span class="sidebar-menu-text">Edit Account</span>
@@ -1291,43 +1265,43 @@
                                 id="layouts_menu">
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../Compact_App_Layout/edit-account.html">
+                                       href="../Compact_App_Layout/signup.html">
                                         <span class="sidebar-menu-text">Compact</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../Mini_App_Layout/edit-account.html">
+                                       href="../Mini_App_Layout/signup.html">
                                         <span class="sidebar-menu-text">Mini</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../Mini_Secondary_Layout/edit-account.html">
+                                       href="../Mini_Secondary_Layout/signup.html">
                                         <span class="sidebar-menu-text">Mini + Secondary</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../App_Layout/edit-account.html">
+                                       href="../App_Layout/signup.html">
                                         <span class="sidebar-menu-text">App</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../Boxed_App_Layout/edit-account.html">
+                                       href="../Boxed_App_Layout/signup.html">
                                         <span class="sidebar-menu-text">Boxed</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item">
                                     <a class="sidebar-menu-button"
-                                       href="../Sticky_App_Layout/edit-account.html">
+                                       href="../Sticky_App_Layout/signup.html">
                                         <span class="sidebar-menu-text">Sticky</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item active">
                                     <a class="sidebar-menu-button"
-                                       href="../Fixed_Layout/edit-account.html">
+                                       href="../Fixed_Layout/signup.html">
                                         <span class="sidebar-menu-text">Fixed</span>
                                     </a>
                                 </li>
@@ -1344,26 +1318,26 @@
         <!-- // END Drawer -->
 
         <!-- jQuery -->
-        <script src="{%static 'luma/public/vendor/jquery.min.js'%}"></script>
+        <script src="/static/luma/public/vendor/jquery.min.js"></script>
 
         <!-- Bootstrap -->
-        <script src="{%static 'luma/public/vendor/popper.min.js'%}"></script>
-        <script src="{%static 'luma/public/vendor/bootstrap.min.js'%}"></script>
+        <script src="/static/luma/public/vendor/popper.min.js"></script>
+        <script src="/static/luma/public/vendor/bootstrap.min.js"></script>
 
         <!-- Perfect Scrollbar -->
-        <script src="{%static 'luma/public/vendor/perfect-scrollbar.min.js'%}"></script>
+        <script src="/static/luma/public/vendor/perfect-scrollbar.min.js"></script>
 
         <!-- DOM Factory -->
-        <script src="{%static 'luma/public/vendor/dom-factory.js'%}"></script>
+        <script src="/static/luma/public/vendor/dom-factory.js"></script>
 
         <!-- MDK -->
-        <script src="{%static 'luma/public/vendor/material-design-kit.js'%}"></script>
+        <script src="/static/luma/public/vendor/material-design-kit.js"></script>
 
         <!-- App JS -->
-        <script src="{%static 'luma/public/js/app.js'%}"></script>
+        <script src="/static/luma/public/js/app.js"></script>
 
         <!-- Preloader -->
-        <script src="{%static 'luma/public/js/preloader.js'%}"></script>
+        <script src="/static/luma/public/js/preloader.js"></script>
 
     </body>
 
