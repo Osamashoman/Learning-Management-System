@@ -1,4 +1,5 @@
 import time
+from itertools import count
 
 from django.db import models
 
@@ -11,6 +12,11 @@ class Course(models.Model):
 	image_key = models.CharField(max_length=200 ,blank=True)
 	price = models.FloatField()
 
+	@property
+	def num_lessons (self):
+		sections = self.section_set.all()
+		num_lessons = Lesson.objects.filter(section__in=sections).count()
+		return num_lessons
 
 class Section(models.Model):
 	course = models.ForeignKey(Course, on_delete=models.CASCADE)

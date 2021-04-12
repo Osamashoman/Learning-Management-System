@@ -43,6 +43,7 @@ def sign_up(request):
         password = request.POST['password']
         User = get_user_model()
         user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, password=password)
+        StudentProfile.objects.create(user=user)
         login(request, user)
         return redirect(index)
     else:
@@ -111,7 +112,7 @@ def buy_course(request,course_id):
     user_id=StudentProfile.objects.get(user_id=request.user.id)
     course=Course.objects.get(id=course_id)
     user_id.courses.add(course)
-    return redirect(sections_in_course ,course_id=course_id)
+    return redirect(course ,course_id=course_id)
 
 def confirm_buy(request,course_id):
 
