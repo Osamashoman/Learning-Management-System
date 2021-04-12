@@ -17,19 +17,22 @@ def index(request):
 
 
 def course(request, course_id):
+    course_is_enrolled = request.user.studentprofile.courses.filter(id=course_id).exists()
     sections = Section.objects.filter(course_id=course_id)
     course = Course.objects.get(id=course_id)
     courses = Course.objects.all()
 
+
+
     vimeo_video_id = VimeoManager.get_id_from_url(None, course.promo_video)
-    lessonssum = sum(list(Lesson.objects.all().values_list('duration', flat=True)))
+    lessonssum = sum(list(Lesson.objects.all().exclude(duration=None).values_list('duration', flat=True)))
 
     context = {'sections': sections,
                'course': course,
                'lessonssum': time.gmtime(lessonssum),
                'vimeo_video_id': vimeo_video_id,
                'courses': courses,
-
+                'course_is_enrolled': course_is_enrolled
                }
     return render(request, 'luma/Demos/Fixed_Layout/student-course.html', context)
 
@@ -43,6 +46,7 @@ def sign_up(request):
         password = request.POST['password']
         User = get_user_model()
         user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, password=password)
+        StudentProfile.objects.create(user=user)
         login(request, user)
         return redirect(index)
     else:
@@ -55,6 +59,7 @@ def sign_in(request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
+
         if user:
             login(request, user)
             return redirect(index)
@@ -109,9 +114,9 @@ def edit_account(request):
 def buy_course(request,course_id):
 
     user_id=StudentProfile.objects.get(user_id=request.user.id)
-    course=Course.objects.get(id=course_id)
-    user_id.courses.add(course)
-    return redirect(sections_in_course ,course_id=course_id)
+    courses=Course.objects.get(id=course_id)
+    user_id.courses.add(courses)
+    return redirect(course ,course_id=course_id)
 
 def confirm_buy(request,course_id):
 

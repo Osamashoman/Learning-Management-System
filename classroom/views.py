@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from classroom.models import Lesson
+from classroom.models import Lesson, Course,Section
 import re
+import time
 
 
 def show_lesson(request, lesson_id=None):
@@ -10,3 +11,18 @@ def show_lesson(request, lesson_id=None):
     return render(request, 'luma/Demos/Fixed_Layout/student-take-lesson-layth-edit.html', context)
 
 
+def take_course(request,course_id):
+    course=Course.objects.get(id=course_id)
+    sections=Section.objects.filter(course_id=course_id)
+    lessons = Lesson.objects.filter(section__course_id=course_id)
+
+    context={
+        'course':course,
+
+        'sections':sections,
+        'lessons':lessons
+
+
+
+    }
+    return render(request, 'luma/Demos/Fixed_Layout/student-take-course.html',context=context)
