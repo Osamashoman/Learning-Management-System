@@ -35,14 +35,13 @@ class MyUserManager(BaseUserManager):
         return user
 
 
-
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField( max_length=30, blank=True)
+    first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
@@ -70,7 +69,14 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-class StudentProfile(models.Model):
-     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-     courses=models.ManyToManyField(Course)
 
+class StudentProfile(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    courses = models.ManyToManyField(Course)
+
+
+class UserResetCode(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    random_code = models.CharField(max_length=200)
+    check_link = models.BooleanField(default=False)
+    expiration = models.DateTimeField()
