@@ -1,9 +1,8 @@
 import time
 
 from django.shortcuts import render
-
-from catalogue.models import StudentProfile
 from classroom.models import Lesson, Course
+
 import re
 
 
@@ -16,7 +15,7 @@ def show_lesson(request, lesson_id=None):
 
 def show_erolled_courses(request):
     print(request.user.id)
-    courses = request.user.studentprofile.courses.all()
+    courses = request.user.StudentProfile.courses.all()
     numlesson = Course.num_lessons
     lessonssum = sum(list(Lesson.objects.all().exclude(duration=None).values_list('duration', flat=True)))
     context = {"courses": courses,
