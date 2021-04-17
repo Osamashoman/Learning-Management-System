@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import datetime
 from pathlib import Path
+from django.utils import timezone
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib.sites import requests
@@ -33,13 +35,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'classroom',
     'dashboard',
+    'catalogue',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalogue',
 
 ]
 
@@ -148,7 +150,9 @@ AUTH_USER_MODEL = 'catalogue.MyUser'
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_PASSWORD = '6de29c07f3c82f4ba5b7dafb688fe587-e687bab4-20724bd4'
-EMAIL_HOST_USER = 'postmaster@sandboxe666f45a71ed4779b861bfdb093f6e7e.mailgun.org'
+EMAIL_HOST_PASSWORD = 'fd8627ecaf36414fb7ff0f9a2d67fb3c-a09d6718-a034f401'
+EMAIL_HOST_USER = 'postmaster@sandbox51dd1882705b4526b9d8c890e677f1b0.mailgun.org'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EXPIRATION_PERIOD = 120
