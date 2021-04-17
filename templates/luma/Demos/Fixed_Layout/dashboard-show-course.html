@@ -544,7 +544,7 @@
                                             <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
 {#                                          <span >#}
 {##}
-{#                                             <a href="{% url 'create-section' course_id=course.id  section_id=section.id %}"#}
+{#                                             <a  href="{% url 'create-section' course_id=course.id  section_id=section.id %}"#}
 {#                                                class="btn btn-accent ">Edit section</a>#}
 {##}
 {#                                            </span>#}
@@ -552,7 +552,7 @@
                                         </a>
                                         <div class="container">
                                             <div class="topnav">
-                                              <a  href="{% url 'delete-section' section_id=section.id %}">Delete</a>
+                                              <a class="deleteButtons" value="{% url 'delete-section' section_id=section.id %}">Delete</a>
                                               <a href="{% url 'create-section' course_id=course.id section_id=section.id %}">Edit</a>
                                               <a href="#contact">Add Before</a>
                                               <a href="#about"> Add After</a>
@@ -573,7 +573,14 @@
 
                                     <a   value="{% url 'delete-lesson' lesson_id=lesson.id  %}" class="deleteButtons"><strong style="color: red;" >Delete</strong></a>
 
-                             <span>{{lesson.duration}}</span>
+                             <span>
+                                 {%if lesson.duration_gmtime_object.tm_hour > 0 %}
+                                    {{ lesson.duration_gmtime_object.tm_hour }}h
+                                    {% elif lesson.duration_gmtime_object.tm_min > 0 %}
+                                    {{lesson.duration_gmtime_object.tm_min}}m
+                             {% endif %}
+                                  {{lesson.duration_gmtime_object.tm_sec}}s
+                             </span>
 
                                         </div></span>
                                             </div>

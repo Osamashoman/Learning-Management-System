@@ -1,8 +1,5 @@
-import time
-
 from django.shortcuts import render
-from classroom.models import Lesson, Course
-
+from classroom.models import Lesson, Course,Section
 import re
 
 
@@ -19,3 +16,16 @@ def show_erolled_courses(request):
     context = {"courses": courses}
 
     return render(request, 'luma/Demos/Fixed_Layout/student-my-courses.html', context)
+
+
+def take_course(request,course_id):
+    course=Course.objects.get(id=course_id)
+    sections=Section.objects.filter(course_id=course_id)
+    lessons = Lesson.objects.filter(section__course_id=course_id)
+
+    context={
+        'course':course,
+        'sections':sections,
+        'lessons':lessons
+    }
+    return render(request, 'luma/Demos/Fixed_Layout/student-take-course.html',context=context)
