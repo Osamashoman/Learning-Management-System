@@ -1,13 +1,17 @@
+import datetime
 
-from catalogue.models import MyUser, StudentProfile
+from django.conf import settings
+from django.http import HttpResponse
+from django.utils import timezone
 
+from catalogue.models import MyUser, StudentProfile, UserResetCode
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.mail import send_mail
 from catalogue.models import MyUser
 from django.shortcuts import render, redirect
 from classroom.models import *
 from dashboard.utilty import VimeoManager
-
+from django.utils.crypto import get_random_string
 
 
 def index(request):
@@ -43,6 +47,7 @@ def sign_up(request):
         password = request.POST['password']
         User = get_user_model()
         user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, password=password)
+        StudentProfile.objects.create(user=user)
         login(request, user)
         return redirect(index)
     else:
@@ -74,24 +79,44 @@ def reset_password(request):
     if request.method == 'POST':
         r = request.POST
         email = r['email']
+        password_reset_code = get_random_string(length=7)
+
         user = MyUser.objects.get(email=email)
-        link = f'http://127.0.0.1:8000/change_password_form/{user.id}/'
+        now = timezone.now()
+        time_part_3_minute = datetime.timedelta(seconds=settings.EXPIRATION_PERIOD)
+        total = time_part_3_minute + now
+
+        UserResetCode.objects.create(random_code=password_reset_code, user_id=user.id, expiration=total)
+        link = f'http://127.0.0.1:8000/change_password_form/{user.id}/{password_reset_code}'
         send_mail('reset password', f' this link for rest password {link}  ', 'luma@outlook.com', [email])
         context['Done'] = True
+
     return render(request, 'luma/Demos/Fixed_Layout/reset-password.html', context)
 
 
-def change_password_form(request, user_id):
-    context = {'user_id': user_id}
-    return render(request, 'luma/Demos/Fixed_Layout/change-password.html' ,context)
+def change_password_form(request, user_id, password_reset_code):
+    context = {}
+    check = UserResetCode.objects.get(user_id=user_id, random_code=password_reset_code)
+    now = timezone.now()
+    context['invalid_link'] = True
+    if now > check.expiration or check.check_link:
+        return render(request, 'luma/Demos/Fixed_Layout/reset-password.html', context)
+    else:
+        context = {'user_id': user_id, 'password_reset_code': password_reset_code}
+        return render(request, 'luma/Demos/Fixed_Layout/change-password.html', context)
 
 
 def change_password(request):
     password = request.POST['password']
     user_id = request.POST['user_id']
+    password_reset_code = request.POST['password_reset_code']
     user = MyUser.objects.get(id=user_id)
     user.set_password(password)
     user.save()
+
+    password_reset_code = UserResetCode.objects.get(user_id=user_id, random_code=password_reset_code)
+    password_reset_code.check_link = True
+    password_reset_code.save()
     return redirect(sign_in)
 
 
@@ -106,20 +131,24 @@ def edit_account(request):
 
     return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
 
-def buy_course(request,course_id):
 
-    user_id=StudentProfile.objects.get(user_id=request.user.id)
-    course=Course.objects.get(id=course_id)
+def sections_in_course(args):
+    pass
+
+
+def buy_course(request, course_id):
+    user_id = StudentProfile.objects.get(user_id=request.user.id)
+    course = Course.objects.get(id=course_id)
     user_id.courses.add(course)
-    return redirect(sections_in_course ,course_id=course_id)
+    return redirect(sections_in_course, course_id=course_id)
 
-def confirm_buy(request,course_id):
 
+def confirm_buy(request, course_id):
     course = Course.objects.get(id=course_id)
 
-    context = {'price':course.price,
-               'title':course.title,
-               'course_id':course_id
+    context = {'price': course.price,
+               'title': course.title,
+               'course_id': course_id
 
-    }
-    return render(request, 'luma/Demos/Fixed_Layout/course enroll.html', context )
+               }
+    return render(request, 'luma/Demos/Fixed_Layout/course enroll.html', context)
