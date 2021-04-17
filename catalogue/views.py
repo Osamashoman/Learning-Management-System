@@ -25,8 +25,8 @@ def course(request, course_id):
     course = Course.objects.get(id=course_id)
     courses = Course.objects.all()
 
-    vimeo_video_id = VimeoManager.get_id_from_url(None, course.promo_video)
-    lessonssum = sum(list(Lesson.objects.all().values_list('duration', flat=True)))
+    vimeo_video_id = VimeoManager().get_id_from_url(course.promo_video)
+    lessonssum = sum(list(Lesson.objects.filter(section__course_id=course_id).exclude(duration=None).values_list('duration', flat=True)))
 
     context = {'sections': sections,
                'course': course,
@@ -132,14 +132,9 @@ def edit_account(request):
     return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
 
 
-def sections_in_course(args):
-    pass
-
-
 def buy_course(request, course_id):
     user_id = StudentProfile.objects.get(user_id=request.user.id)
-    course = Course.objects.get(id=course_id)
-    user_id.courses.add(course)
+    user_id.courses.add(Course.objects.get(id=course_id))
     return redirect(course ,course_id=course_id)
 
 

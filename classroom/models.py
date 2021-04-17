@@ -17,9 +17,14 @@ class Course(models.Model):
         num_lessons = Lesson.objects.filter(section__in=sections).count()
         return num_lessons
 
-    def sum_lessons(self):
-        lessonssum = sum(list(Lesson.objects.all().values_list('duration', flat=True)))
-        return lessonssum
+    @property
+    def duration(self):
+        duration_seconds=  sum(list(Lesson.objects.filter(section__course_id=self.id).exclude(duration=None).values_list('duration', flat=True)))
+        time_obj = time.gmtime(duration_seconds)
+        hours = time_obj.tm_hour
+        minutes = time_obj.tm_min
+        seconds = time_obj.tm_sec
+        return hours, minutes, seconds
 
 
 class Section(models.Model):
