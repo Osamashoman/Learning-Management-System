@@ -9,7 +9,7 @@ urlpatterns = [
     path('signin/', views.sign_in),
     path('signout/', views.sign_out),
     path('reset_password/', views.reset_password),
-    path('change_password_form/<int:user_id>/', views.change_password_form),
+    path('change_password_form/<int:user_id>/<str:password_reset_code>/', views.change_password_form),
     path('change_password/', views.change_password),
     path("buycourse/<int:course_id>/", views.buy_course, name='buy-course'),
     path('buycourse/confirmbuy/<int:course_id>/', views.confirm_buy, name='confirm-buy'),
