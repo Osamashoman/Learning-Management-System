@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import View
 
 from classroom.models import Course, Lesson, Section
 from dashboard.utilty import S3Manager, VimeoManager
@@ -22,20 +23,21 @@ def lesson(request, section_id, lesson_id=None):
     return render(request, 'luma/Demos/Fixed_Layout/create_lesson.html', context)
 
 
-def create_or_update_lesson(request):
-    lesson_id = request.POST.get('lesson_id')
-    defaults = {'title': request.POST["title"],
-                'type': request.POST["type"],
-                'link': request.POST['link'],
-                'section_id': request.POST['section_id']}
+class CreateOrUpdateLessonView(View):
+    def post(self, request):
+        lesson_id = request.POST.get('lesson_id')
+        defaults = {'title': request.POST["title"],
+                    'type': request.POST["type"],
+                    'link': request.POST['link'],
+                    'section_id': request.POST['section_id']}
 
-    if request.POST['type'] == 'Uploaded Video':
-        defaults['duration'] = VimeoManager().get_vimeo_duration(request.POST['link'])
+        if request.POST['type'] == 'Uploaded Video':
+            defaults['duration'] = VimeoManager().get_vimeo_duration(request.POST['link'])
 
-    Lesson.objects.update_or_create(id=lesson_id, defaults=defaults)
+        Lesson.objects.update_or_create(id=lesson_id, defaults=defaults)
 
-    messages.add_message(request, messages.INFO, '')
-    return redirect('lesson', section_id=request.POST['section_id'])
+        messages.add_message(request, messages.INFO, '')
+        return redirect('lesson', section_id=request.POST['section_id'])
 
 
 def courses(request):
@@ -86,19 +88,16 @@ def course_view(request, course_id=None):
     vimeo_video_id = re.search('(\/)(\d+$)', course.promo_video)
     lessons = Lesson.objects.filter(section__course_id=course_id)
     lessons_count = Lesson.objects.filter(section__course_id=course_id).count()
-    section=Section.objects.filter(course_id=course_id)
-
-
-
+    section = Section.objects.filter(course_id=course_id)
 
     course_duraion = 0
     for l in lessons:
         course_duraion += l.duration
     course_time = time.gmtime(course_duraion)
 
-    context = {"sections":section,
-                "course_id":course_id,
-                "course": course,
+    context = {"sections": section,
+               "course_id": course_id,
+               "course": course,
                'vimeo_id': vimeo_video_id.group(2),
                "lessons_count": lessons_count,
                "course_duraion": course_duraion,
@@ -133,17 +132,15 @@ def delete_course(request, course_id):
     Course.objects.get(id=course_id).delete()
     return redirect('show-courses')
 
-def delete_lesson(request,lesson_id ):
-    lesson=Lesson.objects.get(id=lesson_id)
-    section= Section.objects.get(id=lesson.section_id)
+
+def delete_lesson(request, lesson_id):
+    lesson = Lesson.objects.get(id=lesson_id)
+    section = Section.objects.get(id=lesson.section_id)
     lesson.delete()
-    return redirect('view_course',section.course_id)
+    return redirect('view_course', section.course_id)
 
 
-
-def delete_section(request, section_id ):
-    section=Section.objects.get(id=section_id)
+def delete_section(request, section_id):
+    section = Section.objects.get(id=section_id)
     section.delete()
     return redirect(course_view, section.course_id)
-
-

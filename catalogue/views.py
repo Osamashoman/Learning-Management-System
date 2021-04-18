@@ -1,8 +1,10 @@
 import datetime
 
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import timezone
+from django.views import View
 
 from catalogue.models import MyUser, StudentProfile, UserResetCode
 from django.contrib.auth import get_user_model, login, authenticate, logout
@@ -12,6 +14,27 @@ from django.shortcuts import render, redirect
 from classroom.models import *
 from dashboard.utilty import VimeoManager
 from django.utils.crypto import get_random_string
+
+
+class SignUpView(View):
+
+    template = 'luma/Demos/Fixed_Layout/signup.html'
+
+    def post(self, request):
+        print(request.POST)
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        email = request.POST['email']
+        password = request.POST['password']
+        User = get_user_model()
+        user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email,
+                                        password=password)
+        StudentProfile.objects.create(user=user)
+        login(request, user)
+        return redirect(index)
+
+    def get(self, request):
+        return render(request, self.template)
 
 
 def index(request):
@@ -38,35 +61,21 @@ def course(request, course_id):
     return render(request, 'luma/Demos/Fixed_Layout/student-course.html', context)
 
 
-def sign_up(request):
-    if request.method == 'POST':
-        print(request.POST)
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        email = request.POST['email']
-        password = request.POST['password']
-        User = get_user_model()
-        user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, password=password)
-        StudentProfile.objects.create(user=user)
-        login(request, user)
-        return redirect(index)
-    else:
-        return render(request, 'luma/Demos/Fixed_Layout/signup.html')
-
-
-def sign_in(request):
+class SignInView(View):
     context = {}
-    if request.method == 'POST':
+    template = "luma/Demos/Fixed_Layout/login.html"
+
+    def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
         if user:
             login(request, user)
             return redirect(index)
-        else:
-            context['error'] = True
 
-    return render(request, "luma/Demos/Fixed_Layout/login.html", context)
+    def get(self, request):
+        self.context['error'] = True
+        return render(request, self.template, self.context)
 
 
 def sign_out(request):
@@ -117,19 +126,22 @@ def change_password(request):
     password_reset_code = UserResetCode.objects.get(user_id=user_id, random_code=password_reset_code)
     password_reset_code.check_link = True
     password_reset_code.save()
-    return redirect(sign_in)
+    return redirect('sign_in')
 
 
-def edit_account(request):
-    if request.method == 'POST':
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        user = request.user
-        user.first_name = firstname
-        user.last_name = lastname
-        user.save()
+class EditAccountView(View):
+    template='luma/Demos/Fixed_Layout/edit-account.html'
 
-    return render(request, 'luma/Demos/Fixed_Layout/edit-account.html')
+    def post(self, request):
+
+            firstname = request.POST['firstname']
+            lastname = request.POST['lastname']
+            user = request.user
+            user.first_name = firstname
+            user.last_name = lastname
+            user.save()
+
+            return render(request,self.template )
 
 
 def buy_course(request, course_id):
