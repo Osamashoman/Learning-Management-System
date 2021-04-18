@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 from classroom.models import *
 from dashboard.utilty import VimeoManager
 from django.utils.crypto import get_random_string
-
+from django.views import View
 
 def index(request):
     c = Course.objects.all()
@@ -27,13 +27,14 @@ def course(request, course_id):
 
     vimeo_video_id = VimeoManager().get_id_from_url(course.promo_video)
     lessonssum = sum(list(Lesson.objects.filter(section__course_id=course_id).exclude(duration=None).values_list('duration', flat=True)))
+    course_is_enrolled = request.user.studentprofile.courses.filter(id=course_id).exists()
 
     context = {'sections': sections,
                'course': course,
                'lessonssum': time.gmtime(lessonssum),
                'vimeo_video_id': vimeo_video_id,
                'courses': courses,
-
+                'course_is_enrolled':course_is_enrolled
                }
     return render(request, 'luma/Demos/Fixed_Layout/student-course.html', context)
 
@@ -73,10 +74,9 @@ def sign_out(request):
     logout(request)
     return redirect(index)
 
-
-def reset_password(request):
-    context = {}
-    if request.method == 'POST':
+class RestPassword(View):
+    def post(self,request):
+        context = {}
         r = request.POST
         email = r['email']
         password_reset_code = get_random_string(length=7)
@@ -91,7 +91,11 @@ def reset_password(request):
         send_mail('reset password', f' this link for rest password {link}  ', 'luma@outlook.com', [email])
         context['Done'] = True
 
-    return render(request, 'luma/Demos/Fixed_Layout/reset-password.html', context)
+        return render(request, 'luma/Demos/Fixed_Layout/reset-password.html', context)
+
+    def get(self,request):
+
+        return render(request, 'luma/Demos/Fixed_Layout/reset-password.html')
 
 
 def change_password_form(request, user_id, password_reset_code):
@@ -133,6 +137,7 @@ def edit_account(request):
 
 
 def buy_course(request, course_id):
+
     user_id = StudentProfile.objects.get(user_id=request.user.id)
     user_id.courses.add(Course.objects.get(id=course_id))
     return redirect(course ,course_id=course_id)

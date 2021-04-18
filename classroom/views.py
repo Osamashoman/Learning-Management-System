@@ -5,8 +5,15 @@ import re
 
 def show_lesson(request, lesson_id=None):
     lesson = Lesson.objects.get(id=lesson_id)
+    section_id=lesson.section_id
+    section=Section.objects.get(id=section_id)
+    lessons=Lesson.objects.filter(section_id=section_id)
+
     vimeo_video_id = re.search('(\/)(\d+$)', lesson.link)
-    context = {"lesson": lesson, 'vimeo_id': vimeo_video_id.group(2)}
+    context = {"lesson": lesson,
+                'lessons':lessons,
+                'vimeo_id': vimeo_video_id.group(2),
+               'section':section}
     return render(request, 'luma/Demos/Fixed_Layout/student-take-lesson-layth-edit.html', context)
 
 
