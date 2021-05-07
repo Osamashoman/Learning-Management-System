@@ -374,7 +374,7 @@
                     <div class="container page__container">
 
                         <div class="card">
-                            <img src="{%static 'luma/public/images/paths/typescript_892x286.png'%}"
+                            <img src="{%static 'luma/public/images/paths/typescript_892x286.png'%}"h
                                  alt="TypeScript"
                                  class="card-img"
                                  style="max-height: 100%; width: initial;">
@@ -386,8 +386,8 @@
 <!--                                 class="rounded position-absolute"-->
 <!--                                 style="right: 1rem; top: 1rem;">-->
                             <div class="card-body d-flex align-items-center justify-content-center fullbleed">
-                                <div>
-                                    <h2 class="text-white mb-16pt">Introduction to TypeScript</h2>
+                                <div style="text-align: center">
+                                    <h2 class="text-white mb-16pt">{{c.title}}</h2>
                                     <div class="d-flex align-items-center mb-16pt justify-content-center">
                                         <div class="d-flex align-items-center mr-16pt">
                                             <span class="material-icons icon-16pt text-white-50 mr-4pt">access_time</span>
@@ -405,7 +405,7 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <a href="student-take-lesson.html"
                                            class="btn btn-white mr-8pt">Resume</a>
-                                        <a href="student-take-course.html"
+                                        <a href="{%url 'take-course' course_id=c.id %}"
                                            class="btn btn-outline-white ml-0">Start over</a>
                                     </div>
                                 </div>
@@ -421,14 +421,15 @@
 <!--                                         alt="Angular"-->
 <!--                                         class="rounded">-->
 <!--                                </a>-->
-                                <div class="flex">
-                                    <a class="card-title"
-                                       href="student-take-course.html">Angular Fundamentals</a>
-<!--                                    <p class="lh-1 mb-0">-->
-<!--                                        <span class="text-50 small">with</span>-->
-<!--                                        <span class="text-50 small">Elijah Murray</span>-->
-<!--                                    </p>-->
-                                </div>
+<!--                                <div class="flex"-->
+<!--                                >-->
+<!--                                    <a class="card-title"-->
+<!--                                       href="student-take-course.html">c.title</a>-->
+<!--&lt;!&ndash;                                    <p class="lh-1 mb-0">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <span class="text-50 small">with</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <span class="text-50 small">Elijah Murray</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </p>&ndash;&gt;-->
+<!--                                </div>-->
                             </div>
 <!--                            <div class="d-flex align-items-center py-4pt"-->
 <!--                                 style="white-space: nowrap;">-->
@@ -444,6 +445,7 @@
 <!--                            </div>-->
                         </div>
                     </div>
+                        <hr>
                     {%endfor%}
                 </div>
 <!--                <div class="container page__container">-->

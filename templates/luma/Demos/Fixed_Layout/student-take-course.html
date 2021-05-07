@@ -344,8 +344,7 @@
                             <div class="container page__container">
                                 <h1 class="text-white">{{course.title}}</h1>
                                 <p class="lead text-white-50 measure-hero-lead mb-24pt">{{course.description}}</p>
-                                <a href="student-take-lesson.html"
-                                   class="btn btn-white">Resume course</a>
+
                             </div>
                         </div>
                         <div class="navbar navbar-expand-sm navbar-light bg-white border-bottom-2 navbar-list p-0 m-0 align-items-center">
@@ -405,29 +404,29 @@
 
                                 <div class="card mb-32pt mb-lg-64pt">
                                     <ul class="accordion accordion--boxed js-accordion mb-0"
-                                        id="toc-1">
+                                        id="toc-{{section.id}}">
 
                                         <li class="accordion__item open">
                                             <a class="accordion__toggle"
                                                data-toggle="collapse"
-                                               data-parent="#toc-1"
-                                               href="#toc-content-1">
+                                               data-parent="#toc-{{section.id}}"
+                                               href="#toc-content-{{section.id}}">
                                                 <span class="flex">Lessons</span>
                                                 <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
                                             </a>
                                             <div class="accordion__menu">
                                                 <ul class="list-unstyled collapse show"
-                                                    id="toc-content-1">
+                                                    id="toc-content-{{section.id}}">
                                                     {% for lesson in section.lesson_set.all %}
                                                     <li class="accordion__menu-link">
                                                           <span class="material-icons icon-16pt icon&#45;&#45;left text-body">play_circle_outline</span>
-                                                        <a href="#"
-                                           class="flex"
-                                           data-toggle="collapse"
-                                           data-target="#course-toc-{{section.id}}"
-                                           data-parent="#parent">
-                                                             <span class=" " style="display:inline;">{{  lesson.title }}</span></a>
+                                                        <a href=" {% url 'show_lesson'  lesson.id %}"
+                                                           class="flex"
+                                                           >
+                                                             <span class=" " style="display:inline;">{{  lesson.title }}</span>
+                                                        </a>
                                                         <span class="text-muted">
+
                                                                   {%if lesson.duration_gmtime_object.tm_hour > 0 %}
                                     {{ lesson.duration_gmtime_object.tm_hour }}h
                                     {% elif lesson.duration_gmtime_object.tm_min > 0 %}

@@ -260,8 +260,16 @@
                                 <!--                                <a href="student-lesson.html"-->
                                 <!--                                   class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i-->
                                 <!--                                        class="material-icons icon&#45;&#45;right">play_circle_outline</i></a>-->
-                                <a href="pricing.html"
-                                   class="btn btn-white">Start your free trial</a>
+                               {% if  course_is_enrolled %}
+                                <a href="{% url 'take-course' course_id=course.id %}"
+
+                                   class="btn btn-white">GO TO COURSE</a>
+                                {%else%}
+
+                                <a href="{% url 'confirm-buy' course_id=course.id %}"
+
+                                   class="btn btn-accent mb-8pt">Enroll</a>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6" style="padding-right:10%">
@@ -485,14 +493,21 @@
                                 <h4 class="card-title"><strong>Unlock Library</strong></h4>
 
                                 <p class="card-subtitle text-70 mb-24pt">Get access to all videos in the library</p>
-                                {% if course_is_enrolled%}
+                                {% if  course_is_enrolled %}
                                 <a href="{% url 'take-course' course_id=course.id %}"
                                    class="btn btn-accent mb-8pt">GO TO COURSE</a>
 
                                 {%else%}
+
                                 <a href="{% url 'confirm-buy' course_id=course.id %}"
-                                   class="btn btn-accent mb-8pt">Buy</a>
+
+                                   class="btn btn-accent mb-8pt">Enroll</a>
+                                {% if not user.is_authenticated %}
+
                                 <p class="mb-0">Have an account? <a href="login.html">Login</a></p>
+
+                                {% endif %}
+
                                 {% endif %}
                             </div>
                         </div>
