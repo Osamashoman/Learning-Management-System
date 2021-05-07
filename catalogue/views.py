@@ -50,7 +50,10 @@ def course(request, course_id):
 
     vimeo_video_id = VimeoManager().get_id_from_url(course.promo_video)
     lessonssum = sum(list(Lesson.objects.filter(section__course_id=course_id).exclude(duration=None).values_list('duration', flat=True)))
-    course_is_enrolled = request.user.studentprofile.courses.filter(id=course_id).exists()
+    if request.user.is_authenticated :
+        course_is_enrolled = request.user.studentprofile.courses.filter(id=course_id).exists()
+    else :
+        course_is_enrolled = False
 
     context = {'sections': sections,
                'course': course,
@@ -73,6 +76,10 @@ class SignInView(View):
         if user:
             login(request, user)
             return redirect(index)
+        else:
+            self.context['error'] = True
+
+        return render(request, self.template, self.context)
 
     def get(self, request):
         self.context['error'] = True
