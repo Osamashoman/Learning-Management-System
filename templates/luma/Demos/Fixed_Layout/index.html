@@ -1091,11 +1091,11 @@ DESIGN COURSES
                                      data-toggle="popover"
                                      data-trigger="click">
 
-                                    <a href="student-course.html"
+                                    <a href="{%url 'course' c.id%}"
                                        class="card-img-top js-image"
                                        data-position=""
                                        data-height="140">
-                                        <img src="/static/luma/public/images/paths/sketch_430x168.png"
+                                        <img src="https://imgcourses.s3.amazonaws.com/{{c.image_key}}"
                                              alt="course">
                                         <span class="overlay__content">
                                             <span class="overlay__action d-flex flex-column text-center">
