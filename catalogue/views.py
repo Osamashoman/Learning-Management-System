@@ -38,7 +38,7 @@ class SignUpView(View):
 
 
 def index(request):
-    c = Course.objects.all()
+    c = Course.objects.all()[:4]
     context = {"courses": c}
     return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
