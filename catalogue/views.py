@@ -38,7 +38,7 @@ class SignUpView(View):
 
 
 def index(request):
-    c = Course.objects.all()[:4]
+    c = Course.objects.all()[:8]
     context = {"courses": c}
     return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
@@ -152,7 +152,7 @@ class EditAccountView(View):
             user.last_name = lastname
             user.save()
 
-            return render(request,self.template )
+            return render(request,self.template)
 
 
 def buy_course(request, course_id):
