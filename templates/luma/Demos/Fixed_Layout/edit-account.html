@@ -385,7 +385,7 @@
                         <div class="page-separator__text">Basic Information</div>
                     </div>
                     <div class="col-md-6 p-0">
-                        <form method="post" action="{%url 'edit-account'%}">
+                        <form method="POST" action="{%url 'edit-account'%}">
                             {%csrf_token%}
                             <div class="form-group">
                                 <label class="form-label">First name</label>
@@ -411,8 +411,8 @@
 <!--                                       placeholder="Your email address ...">-->
 <!--                                <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>-->
 <!--                            </div>-->
-                            <button class="btn btn-primary">Save changes</button>
-                            <a class="ml-sm-auto text-underline" style=" padding-left:20px " href="{% url 'edit-password' user_id=user.id %}">Reset password</a>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <a class="ml-sm-auto text-underline" style=" padding-left:20px ">Reset password</a>
                         </form>
                     </div>
                 </div>

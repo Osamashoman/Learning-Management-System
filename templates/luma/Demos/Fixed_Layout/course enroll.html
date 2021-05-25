@@ -355,11 +355,44 @@
                                             <small class="form-text text-muted">By checking here and continuing, I agree to the Luma Terms of Use</small>
 
                                         </div>
-                                        <div style="margin: 10px; padding-left:40%  ">
-                                            <a style="text-align: center;" href="{% url 'buy-course' course_id %}"
-                                   class="btn btn-accent mb-8pt">Buy</a>
+<!--                                        <div style="margin: 10px; padding-left:40%  ">-->
+<!--                                            <a style="text-align: center;" href="{% url 'buy-course' course_id %}"-->
+<!--                                   class="btn btn-accent mb-8pt">Buy</a>-->
 
-                                    </div>
+<!--                                    </div>-->
+                                        <div id="paypal-button-container"></div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=ARdo9Ont76SgU1G2YYLcoGwmuZMQuR13gS2vHAGR0YHgEQLx-5Cg2fazEezzZoE1arEE-epcZ-zNZOwM&currency=USD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{price}}'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    window.location.href = "{% url 'buy-course' course_id %}"
+
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
                                     </div>
                                 </div>
                             </div>

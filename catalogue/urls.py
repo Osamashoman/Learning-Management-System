@@ -13,5 +13,5 @@ urlpatterns = [
     path('change_password/', views.change_password),
     path("buycourse/<int:course_id>/", views.buy_course, name='buy-course'),
     path('buycourse/confirmbuy/<int:course_id>/', views.confirm_buy, name='confirm-buy'),
-    path('edit_account/', views.EditAccountView.as_view(), name='edit-account'),
+    path('edit_account/', views.EditAccountView, name='edit-account'),
 ]
