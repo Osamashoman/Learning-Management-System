@@ -3,7 +3,7 @@ from django.urls import path
 from catalogue import views
 
 urlpatterns = [
-    path("", views.index),
+    path("", views.index,name='home'),
     path("course_catalogue/<int:course_id>/", views.course, name="course"),
     path('signup/', views.SignUpView.as_view(), name='sign_up'),
     path('signin/', views.SignInView.as_view(),name='sign_in'),
