@@ -139,6 +139,15 @@ def change_password(request):
     return redirect('sign_in')
 
 
+def editAccount(request):
+    template = 'luma/Demos/Fixed_Layout/edit-account.html'
+    User = request.user
+    context = {
+        'user': User,
+    }
+    return render(request, template, context)
+
+
 def EditAccountView(request):
     template = 'luma/Demos/Fixed_Layout/edit-account.html'
 
