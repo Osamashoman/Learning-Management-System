@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.views import View
 
+from camp200.settings import EMAIL_HOST_USER
 from catalogue.models import MyUser, StudentProfile, UserResetCode
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.mail import send_mail
@@ -36,7 +37,7 @@ class SignUpView(View):
 
 
 def index(request):
-    c = Course.objects.all()[:4]
+    c = Course.objects.all()
     context = {"courses": c}
     return render(request, 'luma/Demos/Fixed_Layout/index.html', context)
 
@@ -65,13 +66,14 @@ def course(request, course_id):
 
 
 class SignInView(View):
-    context = {}
+    context = {'error':False}
     template = "luma/Demos/Fixed_Layout/login.html"
 
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
+        temp=0
         if user:
             login(request, user)
             return redirect(index)
@@ -104,7 +106,7 @@ class RestPassword(View):
 
         UserResetCode.objects.create(random_code=password_reset_code, user_id=user.id, expiration=total)
         link = f'http://127.0.0.1:8000/change_password_form/{user.id}/{password_reset_code}'
-        send_mail('reset password', f' this link for rest password {link}  ', 'luma@outlook.com', [email])
+        send_mail('reset password', f' this link for rest password {link}  ', f'{EMAIL_HOST_USER}', [email])
         context['Done'] = True
 
         return render(request, 'luma/Demos/Fixed_Layout/reset-password.html', context)

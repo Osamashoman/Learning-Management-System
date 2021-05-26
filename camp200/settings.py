@@ -149,9 +149,9 @@ AUTH_USER_MODEL = 'catalogue.MyUser'
 
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_PASSWORD = 'fd8627ecaf36414fb7ff0f9a2d67fb3c-a09d6718-a034f401'
-EMAIL_HOST_USER = 'postmaster@sandbox51dd1882705b4526b9d8c890e677f1b0.mailgun.org'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'realeodulwlrgrps'
+EMAIL_HOST_USER = 'webteamoh3@gmail.com'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
