@@ -114,7 +114,7 @@ DESIGN COURSES
 
                     </div>
                 </div>
-
+{%if user.is_admin%}
                 <div class="row"
                      role="tablist">
                     <div class="col-auto">
@@ -122,7 +122,7 @@ DESIGN COURSES
                            class="btn btn-outline-secondary">Add Course</a>
                     </div>
                 </div>
-
+{% endif %}
             </div>
         </div>
 
@@ -140,11 +140,17 @@ DESIGN COURSES
                         <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay card-group-row__card"
                              data-toggle="popover"
                              data-trigger="click">
-
-                            <a href="{%url 'create-or-update' %}"
+                            {% if user.is_admin %}
+                            <a href="{%url 'update-course-form' c.id %}"
                                class="card-img-top js-image"
                                data-position=""
                                data-height="140">
+                                {% else %}
+                                <a href="{%url 'course' c.id %}"
+                               class="card-img-top js-image"
+                               data-position=""
+                               data-height="140">
+                                    {% endif %}
                                 <img src="https://imgcourses.s3.amazonaws.com/{{c.image_key}}"
                                      alt="course">
                                 <span class="overlay__content">
@@ -157,7 +163,9 @@ DESIGN COURSES
 
                             <div class="card-body flex">
                                 <div class="d-flex">
+                                   {%if user.is_admin%}
                                     <div class="flex">
+
                                         <a href="{%url 'create-or-update' %}" class="card-title"
                                            href="student-course.html">{{c.title}}
                                             <span class="overlay__content align-items-start justify-content-start">
@@ -169,6 +177,7 @@ DESIGN COURSES
                                         </a>
                                         <!--                                                <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>-->
                                     </div>
+                                    {% endif %}
                                     <!--                                            <a href="student-course.html"-->
                                     <!--                                               data-toggle="tooltip"-->
                                     <!--                                               data-title="Add Favorite"-->
