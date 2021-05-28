@@ -33,7 +33,7 @@ DESIGN COURSES
           href="/static/luma/public/css/material-icons.css"
           rel="stylesheet">
 
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome Icons -->card-title
     <link type="text/css"
           href="/static/luma/public/css/fontawesome.css"
           rel="stylesheet">
@@ -943,7 +943,7 @@ DESIGN COURSES
                             <div class="card-body flex">
                                 <div class="d-flex">
                                     <div class="flex">
-                                        <a class="card-title"
+                                        <a href="{%url 'course' c.id%}" class="card-title"
                                            href="student-course.html">{{c.title}}</a>
                                         <!--                                                <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>-->
                                     </div>
